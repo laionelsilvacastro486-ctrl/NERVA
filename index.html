@@ -1,36 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#18202F">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>NERVA</title>
+<meta name="theme-color" content="#18202F">
 
 <style>
 :root{
   --bg:#18202F;
-  --surface:#242F39;
-  --surface2:#384358;
-  --coral:#FFA586;
+  --panel:#242F39;
+  --panel2:#384358;
+  --accent:#FFA586;
   --red:#B81A2B;
   --wine:#401A25;
-  --white:#F7F7F7;
-  --muted:#AEB6C3;
-  --border:rgba(255,255,255,.09);
-  --shadow:0 18px 50px rgba(0,0,0,.28);
+  --text:#F5F7FA;
+  --muted:#AAB3C2;
+  --line:rgba(255,255,255,.09);
+  --radius:18px;
 }
 
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
 
 html,body{
-  width:100%;
+  margin:0;
   min-height:100%;
   background:var(--bg);
-  color:var(--white);
+  color:var(--text);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
@@ -53,933 +51,500 @@ button{
   display:none!important;
 }
 
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
 /* =========================
-   INTRO
+   TOPO
 ========================= */
 
-#intro{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:var(--bg);
+.top{
+  height:68px;
+  border-bottom:1px solid var(--line);
   display:flex;
   align-items:center;
-  justify-content:center;
-  transition:.7s ease;
-}
-
-.intro-logo{
-  font-size:48px;
-  font-weight:900;
-  letter-spacing:8px;
-  color:var(--coral);
-  animation:logoIn 1.2s ease;
-}
-
-@keyframes logoIn{
-  from{
-    opacity:0;
-    transform:scale(.88);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-/* =========================
-   APP
-========================= */
-
-#app{
-  min-height:100vh;
-}
-
-.topbar{
-  height:72px;
+  gap:18px;
+  padding:0 22px;
   position:sticky;
   top:0;
-  z-index:100;
   background:rgba(24,32,47,.94);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  padding:0 28px;
-  gap:24px;
+  backdrop-filter:blur(16px);
+  z-index:20;
 }
 
-.brand{
+.logo{
   font-weight:900;
-  font-size:22px;
-  letter-spacing:4px;
-  color:var(--coral);
-  cursor:pointer;
+  letter-spacing:.12em;
+  font-size:21px;
 }
 
 .search{
   flex:1;
-  max-width:560px;
-  position:relative;
+  max-width:620px;
 }
 
-.search input{
+.search input,
+.field input,
+.field textarea,
+.field select{
   width:100%;
-  height:42px;
-  border:none;
+  background:#1d2735;
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:13px 15px;
+  border-radius:12px;
   outline:none;
-  border-radius:12px;
-  background:var(--surface);
-  color:white;
-  padding:0 16px;
-  border:1px solid var(--border);
 }
 
-.search input::placeholder{
-  color:#8d97a7;
-}
-
-.top-actions{
-  margin-left:auto;
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
-  background:var(--surface);
-  color:white;
-  border-radius:12px;
-}
-
-.avatar-small{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:var(--surface2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  color:var(--coral);
-  cursor:pointer;
+.search input:focus,
+.field input:focus,
+.field textarea:focus{
+  border-color:var(--accent);
 }
 
 /* =========================
-   LAYOUT
+   ESTRUTURA
 ========================= */
 
+.app{
+  min-height:100vh;
+}
+
 .layout{
-  display:flex;
-  min-height:calc(100vh - 72px);
+  display:grid;
+  grid-template-columns:230px 1fr;
+  min-height:calc(100vh - 68px);
 }
 
-.sidebar{
-  width:240px;
-  border-right:1px solid var(--border);
-  padding:24px 14px;
+.side{
+  border-right:1px solid var(--line);
+  padding:20px 14px;
   position:sticky;
-  top:72px;
-  height:calc(100vh - 72px);
-  background:#1b2433;
+  top:68px;
+  height:calc(100vh - 68px);
 }
 
-.nav-title{
-  color:#707b8e;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1.4px;
-  padding:0 12px 10px;
+.nav{
+  display:grid;
+  gap:5px;
 }
 
-.nav-item{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
+.nav button,
+.mobile button{
+  background:none;
   border:0;
-  background:transparent;
-  color:#c8ced8;
-  padding:12px;
-  border-radius:10px;
+  color:var(--muted);
   text-align:left;
-  margin-bottom:4px;
+  padding:12px 13px;
+  border-radius:10px;
 }
 
-.nav-item:hover,
-.nav-item.active{
-  background:var(--surface);
-  color:white;
-}
-
-.nav-item.active{
-  border-left:3px solid var(--coral);
+.nav button.active,
+.nav button:hover,
+.mobile button.active{
+  background:rgba(255,165,134,.09);
+  color:var(--text);
 }
 
 .main{
-  flex:1;
-  min-width:0;
-  padding:32px;
-  max-width:1500px;
-  margin:auto;
+  padding:28px;
+  max-width:1250px;
   width:100%;
+  margin:auto;
+}
+
+.view{
+  display:none;
+}
+
+.view.active{
+  display:block;
 }
 
 /* =========================
-   TYPOGRAPHY
+   TEXTOS
 ========================= */
 
-.page-title{
+h1{
   font-size:34px;
-  font-weight:850;
-  letter-spacing:-1px;
+  margin:0 0 8px;
 }
 
-.page-subtitle{
+h2{
+  font-size:22px;
+  margin:0 0 10px;
+}
+
+h3{
+  margin:12px 0 7px;
+}
+
+.sub{
   color:var(--muted);
-  margin-top:7px;
+  line-height:1.55;
 }
 
-.section{
-  margin-top:34px;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:16px;
-}
-
-.section-title{
-  font-size:21px;
-  font-weight:800;
-}
-
-.link-btn{
-  color:var(--coral);
-  border:0;
-  background:none;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-  border:1px solid var(--border);
-  border-radius:24px;
-  min-height:300px;
-  background:
-    radial-gradient(circle at 80% 20%,rgba(255,165,134,.13),transparent 28%),
-    linear-gradient(135deg,#242F39,#18202F);
-  padding:38px;
-  display:flex;
-  align-items:flex-end;
-  position:relative;
-  overflow:hidden;
-}
-
-.hero:after{
-  content:"";
-  position:absolute;
-  width:420px;
-  height:420px;
-  right:-150px;
-  bottom:-220px;
-  border-radius:50%;
-  background:rgba(184,26,43,.13);
-}
-
-.hero-content{
-  position:relative;
-  z-index:1;
-  max-width:700px;
-}
-
-.hero-label{
-  color:var(--coral);
-  font-weight:800;
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-}
-
-.hero h1{
-  font-size:44px;
-  line-height:1.02;
-  margin-top:10px;
-}
-
-.hero p{
-  margin-top:14px;
-  color:#c5cbd4;
-  line-height:1.6;
-  max-width:650px;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-.btn{
-  border:0;
-  border-radius:11px;
-  padding:11px 17px;
-  font-weight:750;
-  transition:.2s ease;
-}
-
-.btn:hover{
-  transform:translateY(-1px);
-}
-
-.btn-primary{
-  background:var(--coral);
-  color:#18202F;
-}
-
-.btn-danger{
-  background:var(--red);
-  color:white;
-}
-
-.btn-secondary{
-  background:var(--surface2);
-  color:white;
-  border:1px solid var(--border);
-}
-
-.btn-ghost{
-  background:transparent;
-  color:#dbe0e8;
-  border:1px solid var(--border);
+.muted{
+  color:var(--muted);
 }
 
 /* =========================
    CARDS
 ========================= */
 
+.hero{
+  background:linear-gradient(
+    135deg,
+    #242F39,
+    #1d2735
+  );
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:30px;
+  margin-bottom:22px;
+}
+
+.hero strong{
+  color:var(--accent);
+}
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:16px;
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+  gap:14px;
 }
 
 .card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
 }
 
-.card-body{
-  padding:16px;
+.card:hover{
+  border-color:rgba(255,165,134,.22);
 }
 
-.card-title{
+.row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.between{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.stack{
+  display:grid;
+  gap:14px;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn{
+  border:1px solid var(--line);
+  background:#1c2634;
+  color:var(--text);
+  padding:11px 15px;
+  border-radius:11px;
+}
+
+.btn:hover{
+  border-color:rgba(255,165,134,.35);
+}
+
+.btn.primary{
+  background:var(--accent);
+  color:#18202F;
+  border-color:var(--accent);
   font-weight:800;
 }
 
-.card-sub{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:5px;
+.btn.red{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+.btn.ghost{
+  background:transparent;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+  display:inline-flex;
+  padding:5px 9px;
+  border-radius:999px;
+  background:rgba(255,165,134,.1);
+  color:var(--accent);
+  font-size:12px;
+  font-weight:700;
+}
+
+/* =========================
+   AVATAR / CAPAS
+========================= */
+
+.avatar{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:var(--panel2);
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  overflow:hidden;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .cover{
-  width:100%;
-  aspect-ratio:1;
+  height:150px;
+  border-radius:14px;
   background:
-    linear-gradient(145deg,#384358,#401A25);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--coral);
-  font-size:30px;
-  font-weight:900;
-}
-
-.artist-card{
-  cursor:pointer;
-  transition:.2s ease;
-}
-
-.artist-card:hover{
-  transform:translateY(-3px);
-}
-
-.artist-avatar{
-  width:100%;
-  aspect-ratio:1;
-  background:
-    linear-gradient(145deg,#384358,#242F39);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:42px;
-  font-weight:900;
-  color:var(--coral);
-}
-
-.verified{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:var(--coral);
-  color:var(--bg);
-  font-size:11px;
-  font-weight:900;
-  margin-left:5px;
-}
-
-/* =========================
-   CHART
-========================= */
-
-.chart-list{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
+    linear-gradient(
+      135deg,
+      var(--wine),
+      var(--panel2)
+    );
+  margin-bottom:13px;
   overflow:hidden;
 }
 
-.chart-row{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:15px 18px;
-  border-bottom:1px solid var(--border);
-}
-
-.chart-row:last-child{
-  border-bottom:0;
-}
-
-.chart-number{
-  width:32px;
-  color:var(--muted);
-  font-weight:800;
-}
-
-.chart-art{
-  width:50px;
-  height:50px;
-  border-radius:9px;
-  background:var(--surface2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--coral);
-  font-weight:900;
-}
-
-.chart-info{
-  flex:1;
-}
-
-.chart-name{
-  font-weight:800;
-}
-
-.chart-meta{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.chart-score{
-  color:var(--coral);
-  font-weight:800;
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 /* =========================
-   PROFILE
+   LISTAS
 ========================= */
 
-.profile-head{
-  background:linear-gradient(145deg,#242F39,#18202F);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:30px;
-  display:flex;
-  gap:24px;
-  align-items:center;
-}
-
-.profile-avatar{
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  background:var(--surface2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:36px;
-  color:var(--coral);
-  font-weight:900;
-}
-
-.profile-info{
-  flex:1;
-}
-
-.profile-name{
-  font-size:28px;
-  font-weight:900;
-}
-
-.profile-handle{
-  color:var(--muted);
-  margin-top:4px;
-}
-
-.profile-bio{
-  margin-top:12px;
-  color:#c5cbd4;
-  max-width:700px;
-}
-
-.stats{
-  display:flex;
-  gap:28px;
-  margin-top:18px;
-}
-
-.stat strong{
-  display:block;
-  font-size:19px;
-}
-
-.stat span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-results{
-  margin-top:20px;
-}
-
-.result-block{
-  margin-bottom:30px;
-}
-
-.result-list{
+.list{
   display:grid;
   gap:10px;
 }
 
-.result{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:15px;
-  border:1px solid var(--border);
-  background:var(--surface);
-  border-radius:13px;
-  cursor:pointer;
+.item{
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#202b3a;
 }
 
-.result:hover{
-  border-color:rgba(255,165,134,.35);
+.stat{
+  font-size:28px;
+  font-weight:900;
 }
 
 /* =========================
-   MODALS
+   MODAL
 ========================= */
 
-.modal-backdrop{
+.modal{
   position:fixed;
   inset:0;
-  z-index:500;
   background:rgba(0,0,0,.7);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:grid;
+  place-items:center;
   padding:20px;
+  z-index:50;
 }
 
-.modal{
-  width:min(600px,100%);
+.modalbox{
+  width:min(560px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:22px;
   max-height:90vh;
   overflow:auto;
-  background:#202b3b;
-  border:1px solid var(--border);
-  border-radius:20px;
-  box-shadow:var(--shadow);
-  padding:26px;
 }
 
-.modal h2{
-  font-size:24px;
-}
-
-.modal p{
-  color:var(--muted);
-  line-height:1.55;
-  margin-top:8px;
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.close{
-  border:0;
-  background:transparent;
-  color:#b8c0cc;
-  font-size:25px;
-}
-
-.form{
+.field{
   display:grid;
-  gap:13px;
-  margin-top:22px;
+  gap:7px;
+  margin:12px 0;
 }
 
-.label{
-  color:#c8ced8;
+.field label{
   font-size:13px;
+  color:var(--muted);
 }
 
-.input,
-.textarea{
-  width:100%;
-  background:#18202F;
-  border:1px solid var(--border);
-  color:white;
-  border-radius:11px;
-  padding:12px 13px;
-  outline:none;
-}
-
-.input:focus,
-.textarea:focus{
-  border-color:rgba(255,165,134,.6);
-}
-
-.textarea{
+.field textarea{
   min-height:110px;
   resize:vertical;
 }
 
-.form-actions{
-  display:flex;
-  gap:10px;
-  margin-top:5px;
+/* =========================
+   AVISOS
+========================= */
+
+.notice{
+  padding:12px 14px;
+  border-radius:12px;
+  background:#202b3a;
+  border:1px solid var(--line);
+  color:var(--muted);
+}
+
+.notice.error{
+  border-color:rgba(184,26,43,.55);
+  color:#ffd7dc;
+}
+
+.notice.ok{
+  border-color:rgba(255,165,134,.4);
+  color:#ffe3d8;
+}
+
+.empty{
+  padding:35px;
+  text-align:center;
+  border:1px dashed var(--line);
+  border-radius:18px;
+  color:var(--muted);
 }
 
 /* =========================
-   AUTH
+   AUTENTICAÇÃO
 ========================= */
 
-#authScreen{
-  position:fixed;
-  inset:0;
-  z-index:900;
-  background:
-    radial-gradient(circle at 80% 10%,rgba(255,165,134,.10),transparent 25%),
-    #18202F;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.auth{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
   padding:20px;
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(184,26,43,.18),
+      transparent 32%
+    ),
+    var(--bg);
 }
 
-.auth-box{
-  width:min(470px,100%);
-  background:#202b3b;
-  border:1px solid var(--border);
+.authbox{
+  width:min(440px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
   border-radius:24px;
-  padding:34px;
-  box-shadow:var(--shadow);
+  padding:28px;
 }
 
-.auth-brand{
-  color:var(--coral);
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:5px;
-}
-
-.auth-title{
-  font-size:28px;
-  font-weight:850;
-  margin-top:28px;
-}
-
-.auth-text{
-  color:var(--muted);
-  margin-top:8px;
-  line-height:1.5;
+.authlogo{
+  font-weight:950;
+  letter-spacing:.16em;
+  font-size:27px;
+  margin-bottom:22px;
 }
 
 .auth-tabs{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:5px;
-  background:#18202F;
-  padding:5px;
+  background:#1d2735;
   border-radius:12px;
-  margin-top:24px;
+  padding:4px;
+  margin-bottom:18px;
 }
 
-.auth-tab{
+.auth-tabs button{
   border:0;
-  background:transparent;
-  color:#8f99a9;
-  padding:10px;
-  border-radius:8px;
-}
-
-.auth-tab.active{
-  background:var(--surface2);
-  color:white;
-}
-
-.auth-message{
-  margin-top:15px;
-  font-size:13px;
-  color:var(--coral);
-}
-
-/* =========================
-   ONBOARDING
-========================= */
-
-#onboarding{
-  position:fixed;
-  inset:0;
-  z-index:800;
-  background:#18202F;
-  overflow:auto;
-  padding:30px 20px;
-}
-
-.onboarding-box{
-  width:min(850px,100%);
-  margin:0 auto;
-}
-
-.onboarding-brand{
-  color:var(--coral);
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:4px;
-}
-
-.progress{
-  height:5px;
-  background:var(--surface);
-  border-radius:5px;
-  margin-top:24px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  width:25%;
-  background:var(--coral);
-  transition:.3s;
-}
-
-.onboarding-content{
-  margin-top:60px;
-}
-
-.onboarding-title{
-  font-size:38px;
-  line-height:1.05;
-}
-
-.onboarding-text{
+  background:none;
   color:var(--muted);
-  margin-top:12px;
-  max-width:650px;
-  line-height:1.6;
+  padding:10px;
+  border-radius:9px;
 }
 
-.option-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:28px;
-}
-
-.option{
-  padding:15px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:12px;
-  color:#d9dee7;
-  text-align:left;
-}
-
-.option.selected{
-  background:rgba(255,165,134,.1);
-  border-color:var(--coral);
-  color:var(--coral);
-}
-
-.onboarding-actions{
-  display:flex;
-  justify-content:space-between;
-  margin-top:35px;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-#toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:2000;
-  background:#202b3b;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  border-radius:12px;
-  padding:14px 17px;
-  max-width:360px;
-  color:white;
-  transform:translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-}
-
-#toast.show{
-  transform:translateY(0);
-  opacity:1;
+.auth-tabs button.active{
+  background:var(--panel2);
+  color:var(--text);
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-.mobile-nav{
+.mobile{
   display:none;
 }
 
-@media(max-width:1050px){
-  .grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-}
+@media(max-width:900px){
 
-@media(max-width:800px){
-  .sidebar{
-    display:none;
-  }
-
-  .topbar{
-    padding:0 15px;
-    gap:12px;
-  }
-
-  .search{
-    max-width:none;
-  }
-
-  .top-actions{
-    display:none;
-  }
-
-  .main{
-    padding:22px 15px 90px;
-  }
-
-  .hero{
-    padding:25px;
-    min-height:280px;
-  }
-
-  .hero h1{
-    font-size:34px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  .mobile-nav{
-    position:fixed;
-    display:flex;
-    bottom:0;
-    left:0;
-    right:0;
-    height:67px;
-    background:rgba(24,32,47,.97);
-    backdrop-filter:blur(15px);
-    border-top:1px solid var(--border);
-    z-index:300;
-    justify-content:space-around;
-    padding:7px;
-  }
-
-  .mobile-nav button{
-    background:none;
-    border:0;
-    color:#8994a5;
-    font-size:11px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
-  }
-
-  .mobile-nav button.active{
-    color:var(--coral);
-  }
-
-  .profile-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .option-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .onboarding-title{
-    font-size:31px;
-  }
-}
-
-@media(max-width:500px){
-  .grid{
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .page-title{
-    font-size:29px;
-  }
-
-  .option-grid{
+  .layout{
     grid-template-columns:1fr;
   }
 
-  .auth-box{
-    padding:25px;
+  .side{
+    display:none;
   }
 
-  .stats{
-    gap:18px;
+  .mobile{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:64px;
+    background:rgba(24,32,47,.96);
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns:
+      repeat(5,1fr);
+    z-index:30;
+  }
+
+  .mobile button{
+    text-align:center;
+    font-size:11px;
+    padding:8px;
+  }
+
+  .main{
+    padding:20px 16px 88px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .grid2{
+    grid-template-columns:1fr;
+  }
+
+  .top{
+    padding:0 14px;
+  }
+
+  .search{
+    display:none;
+  }
+
+  h1{
+    font-size:29px;
   }
 }
 </style>
@@ -987,3247 +552,393 @@ button{
 
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-  <div class="intro-logo">NERVA</div>
-</div>
+<!-- =========================
+     AUTENTICAÇÃO
+========================= -->
 
-<!-- AUTH -->
-<div id="authScreen" class="hidden">
-  <div class="auth-box">
+<div id="auth" class="auth">
 
-    <div class="auth-brand">NERVA</div>
+  <div class="authbox">
 
-    <div class="auth-title" id="authTitle">
-      Entre na NERVA
-    </div>
-
-    <div class="auth-text" id="authDescription">
-      Crie sua conta para acompanhar artistas,
-      lançamentos, eras, fandoms e tudo que acontece na comunidade.
-    </div>
-
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="loginTab" onclick="showAuth('login')">
-        Entrar
-      </button>
-
-      <button class="auth-tab" id="signupTab" onclick="showAuth('signup')">
-        Criar conta
-      </button>
-    </div>
-
-    <form class="form" onsubmit="handleAuth(event)">
-
-      <div>
-        <div class="label">Seu e-mail</div>
-        <input
-          id="authEmail"
-          class="input"
-          type="email"
-          autocomplete="email"
-          required
-          placeholder="seu@email.com">
-      </div>
-
-      <div>
-        <div class="label">Sua senha</div>
-        <input
-          id="authPassword"
-          class="input"
-          type="password"
-          autocomplete="current-password"
-          required
-          minlength="6"
-          placeholder="Mínimo de 6 caracteres">
-      </div>
-
-      <div id="signupNameBox" class="hidden">
-        <div class="label">Como devemos chamar você?</div>
-        <input
-          id="authName"
-          class="input"
-          type="text"
-          placeholder="Seu nome ou nome artístico">
-      </div>
-
-      <button class="btn btn-primary" id="authSubmit" type="submit">
-        Entrar
-      </button>
-
-    </form>
-
-    <div id="authMessage" class="auth-message"></div>
-
-  </div>
-</div>
-
-<!-- ONBOARDING -->
-<div id="onboarding" class="hidden">
-
-  <div class="onboarding-box">
-
-    <div class="onboarding-brand">NERVA</div>
-
-    <div class="progress">
-      <div id="progressBar" class="progress-bar"></div>
-    </div>
-
-    <div id="onboardingContent"></div>
-
-  </div>
-</div>
-
-<!-- APP -->
-<div id="app" class="hidden">
-
-  <header class="topbar">
-
-    <div class="brand" onclick="navigate('home')">
+    <div class="authlogo">
       NERVA
     </div>
 
-    <div class="search">
+    <div
+      class="sub"
+      style="margin-bottom:20px"
+    >
+      O lugar onde a cena acontece.
+    </div>
+
+    <div class="auth-tabs">
+
+      <button
+        id="tabLogin"
+        class="active"
+        onclick="setAuthMode('login')"
+      >
+        Entrar
+      </button>
+
+      <button
+        id="tabSignup"
+        onclick="setAuthMode('signup')"
+      >
+        Criar conta
+      </button>
+
+    </div>
+
+    <div id="authNotice"></div>
+
+    <div
+      id="nameField"
+      class="field hidden"
+    >
+      <label>Nome</label>
+
       <input
-        id="globalSearch"
-        type="search"
-        placeholder="Buscar na NERVA..."
-        onkeydown="if(event.key==='Enter')performSearch()">
+        id="name"
+        autocomplete="name"
+      >
     </div>
 
-    <div class="top-actions">
+    <div class="field">
 
-      <button class="icon-btn" onclick="showNotifications()" title="Notificações">
-        ◌
-      </button>
+      <label>E-mail</label>
 
-      <div
-        id="topAvatar"
-        class="avatar-small"
-        onclick="navigate('profile')">
-        N
-      </div>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+      >
 
     </div>
 
-  </header>
-
-  <div class="layout">
-
-    <aside class="sidebar">
-
-      <div class="nav-title">NERVA</div>
-
-      <button class="nav-item active" data-page="home" onclick="navigate('home')">
-        Início
-      </button>
-
-      <button class="nav-item" data-page="discover" onclick="navigate('discover')">
-        Descobrir
-      </button>
-
-      <button class="nav-item" data-page="now" onclick="navigate('now')">
-        Agora
-      </button>
-
-      <button class="nav-item" data-page="charts" onclick="navigate('charts')">
-        Charts
-      </button>
-
-      <div class="nav-title" style="margin-top:25px">
-        Comunidade
-      </div>
-
-      <button class="nav-item" data-page="artists" onclick="navigate('artists')">
-        Artistas
-      </button>
-
-      <button class="nav-item" data-page="albums" onclick="navigate('albums')">
-        Álbuns
-      </button>
-
-      <button class="nav-item" data-page="eras" onclick="navigate('eras')">
-        Eras
-      </button>
-
-      <button class="nav-item" data-page="labels" onclick="navigate('labels')">
-        Gravadoras
-      </button>
-
-      <button class="nav-item" data-page="fandoms" onclick="navigate('fandoms')">
-        Fandoms
-      </button>
-
-      <button class="nav-item" data-page="news" onclick="navigate('news')">
-        Notícias
-      </button>
-
-      <div class="nav-title" style="margin-top:25px">
-        Você
-      </div>
-
-      <button class="nav-item" data-page="profile" onclick="navigate('profile')">
-        Meu perfil
-      </button>
-
-      <button class="nav-item" onclick="openVerification()">
-        Verificação
-      </button>
-
-      <button class="nav-item" onclick="openSupport()">
-        Suporte NERVA
-      </button>
-
-      <button class="nav-item" onclick="logout()">
-        Sair
-      </button>
-
-    </aside>
-
-    <main class="main" id="main"></main>
-
-  </div>
-
-  <nav class="mobile-nav">
-
-    <button data-mobile="home" onclick="navigate('home')">
-      <span>⌂</span>
-      Início
-    </button>
-
-    <button data-mobile="discover" onclick="navigate('discover')">
-      <span>⌕</span>
-      Descobrir
-    </button>
-
-    <button data-mobile="now" onclick="navigate('now')">
-      <span>●</span>
-      Agora
-    </button>
-
-    <button data-mobile="charts" onclick="navigate('charts')">
-      <span>↗</span>
-      Charts
-    </button>
-
-    <button data-mobile="profile" onclick="navigate('profile')">
-      <span>○</span>
-      Perfil
-    </button>
-
-  </nav>
-
-</div>
-
-<div id="modalRoot"></div>
-<div id="toast"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-
-/* ==========================================================
-   CONFIGURAÇÃO SUPABASE
-========================================================== */
-
-const SUPABASE_URL =
-  "https://vtjibeowavgzgjuzquif.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* ==========================================================
-   ESTADO DA APLICAÇÃO
-========================================================== */
-
-let currentUser = null;
-let currentProfile = null;
-let currentPage = "home";
-
-let authMode = "login";
-
-let onboardingStep = 1;
-
-let onboardingData = {
-  displayName:"",
-  username:"",
-  isArtist:false,
-  genres:[]
-};
-
-let followedArtists = [];
-
-
-/* ==========================================================
-   DADOS INICIAIS DA NERVA
-========================================================== */
-
-const genres = [
-  "Pop",
-  "Funk",
-  "Rap / Hip-Hop",
-  "R&B",
-  "Rock",
-  "Eletrônica",
-  "MPB",
-  "Música Latina",
-  "Alternativo",
-  "Indie",
-  "Reggae",
-  "Sertanejo",
-  "Trap",
-  "Soul",
-  "Jazz",
-  "K-Pop",
-  "J-Pop",
-  "Country",
-  "Forró",
-  "Pagode",
-  "Samba",
-  "Axé",
-  "House",
-  "Techno",
-  "Metal",
-  "Punk",
-  "Música clássica",
-  "Lo-fi",
-  "Experimental",
-  "Trilhas sonoras",
-  "Gospel",
-  "Outro"
-];
-
-const demoArtists = [
-  {
-    id:"demo-1",
-    name:"Aurora",
-    username:"aurora",
-    genres:["Pop","R&B"],
-    verified:true,
-    trend:"Em alta",
-    followers:12800
-  },
-  {
-    id:"demo-2",
-    name:"Lunna",
-    username:"lunna",
-    genres:["Pop","Eletrônica"],
-    verified:true,
-    trend:"Em ascensão",
-    followers:8200
-  },
-  {
-    id:"demo-3",
-    name:"Nox",
-    username:"nox",
-    genres:["Trap","Rap / Hip-Hop"],
-    verified:false,
-    trend:"Em ascensão",
-    followers:4200
-  },
-  {
-    id:"demo-4",
-    name:"Maya",
-    username:"maya",
-    genres:["R&B","Soul"],
-    verified:false,
-    trend:"Em alta",
-    followers:6800
-  },
-  {
-    id:"demo-5",
-    name:"Vega",
-    username:"vega",
-    genres:["Rock","Alternativo"],
-    verified:false,
-    trend:"Rising",
-    followers:2900
-  },
-  {
-    id:"demo-6",
-    name:"Liah",
-    username:"liah",
-    genres:["Pop","MPB"],
-    verified:true,
-    trend:"Mais seguida",
-    followers:21400
-  }
-];
-
-const demoAlbums = [
-  {
-    title:"NEON HEART",
-    artist:"Aurora",
-    type:"Álbum",
-    year:"2026"
-  },
-  {
-    title:"AFTER DARK",
-    artist:"Lunna",
-    type:"EP",
-    year:"2026"
-  },
-  {
-    title:"NO SIGNAL",
-    artist:"Nox",
-    type:"Álbum",
-    year:"2026"
-  },
-  {
-    title:"SILK",
-    artist:"Maya",
-    type:"EP",
-    year:"2026"
-  }
-];
-
-const demoNews = [
-  {
-    title:"Uma nova era começou",
-    text:"A cena está mudando e novos projetos estão chegando à NERVA.",
-    tag:"ERAS"
-  },
-  {
-    title:"Artistas em ascensão",
-    text:"Confira quem está crescendo mais rápido nesta semana.",
-    tag:"CHARTS"
-  },
-  {
-    title:"Novos lançamentos",
-    text:"Descubra os projetos que chegaram recentemente.",
-    tag:"LANÇAMENTOS"
-  }
-];
-
-const demoLabels = [
-  {
-    name:"NOVA Records",
-    artists:18,
-    genre:"Pop / R&B"
-  },
-  {
-    name:"Red Room",
-    artists:11,
-    genre:"Rap / Trap"
-  },
-  {
-    name:"Moon Records",
-    artists:8,
-    genre:"Alternativo"
-  }
-];
-
-
-/* ==========================================================
-   UTILIDADES
-========================================================== */
-
-function escapeHTML(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function initials(name){
-  if(!name) return "N";
-
-  return name
-    .trim()
-    .split(/\s+/)
-    .slice(0,2)
-    .map(x=>x[0])
-    .join("")
-    .toUpperCase();
-}
-
-function toast(message){
-  const el = document.getElementById("toast");
-
-  el.textContent = message;
-  el.classList.add("show");
-
-  clearTimeout(window.__toastTimer);
-
-  window.__toastTimer =
-    setTimeout(()=>{
-      el.classList.remove("show");
-    },3500);
-}
-
-function openModal(html){
-  document.getElementById("modalRoot").innerHTML = `
-    <div class="modal-backdrop" onclick="closeModal(event)">
-      <div class="modal" onclick="event.stopPropagation()">
-        ${html}
-      </div>
-    </div>
-  `;
-}
-
-function closeModal(event){
-  if(event && event.target !== event.currentTarget) return;
-
-  document.getElementById("modalRoot").innerHTML = "";
-}
-
-
-/* ==========================================================
-   AUTH
-========================================================== */
-
-function showAuth(mode){
-
-  authMode = mode;
-
-  const loginTab =
-    document.getElementById("loginTab");
-
-  const signupTab =
-    document.getElementById("signupTab");
-
-  const signupNameBox =
-    document.getElementById("signupNameBox");
-
-  const title =
-    document.getElementById("authTitle");
-
-  const description =
-    document.getElementById("authDescription");
-
-  const submit =
-    document.getElementById("authSubmit");
-
-  document.getElementById("authMessage").textContent = "";
-
-  if(mode === "login"){
-
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-
-    signupNameBox.classList.add("hidden");
-
-    title.textContent =
-      "Entre na NERVA";
-
-    description.textContent =
-      "Entre na sua conta para acompanhar artistas, lançamentos, eras, fandoms e tudo que acontece na comunidade.";
-
-    submit.textContent =
-      "Entrar";
-
-  }else{
-
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-
-    signupNameBox.classList.remove("hidden");
-
-    title.textContent =
-      "Crie sua conta";
-
-    description.textContent =
-      "A NERVA começa com você. Crie seu perfil e descubra a comunidade.";
-
-    submit.textContent =
-      "Criar conta";
-  }
-}
-
-async function handleAuth(event){
-
-  event.preventDefault();
-
-  const email =
-    document.getElementById("authEmail").value.trim();
-
-  const password =
-    document.getElementById("authPassword").value;
-
-  const message =
-    document.getElementById("authMessage");
-
-  const button =
-    document.getElementById("authSubmit");
-
-  button.disabled = true;
-
-  message.textContent =
-    "Processando...";
-
-  try{
-
-    if(authMode === "signup"){
-
-      const name =
-        document.getElementById("authName").value.trim();
-
-      if(!name){
-        throw new Error(
-          "Digite o nome que deseja usar na NERVA."
-        );
-      }
-
-      const {data,error} =
-        await supabaseClient.auth.signUp({
-          email,
-          password,
-          options:{
-            data:{
-              display_name:name
-            }
-          }
-        });
-
-      if(error) throw error;
-
-      if(!data.session){
-
-        message.textContent =
-          "Conta criada. Confira seu e-mail para confirmar a conta.";
-
-        toast(
-          "Enviamos um link de confirmação para seu e-mail."
-        );
-
-        return;
-      }
-
-      currentUser = data.user;
-
-      await createOrUpdateProfile(
-        currentUser,
-        name
-      );
-
-      startOnboarding();
-
-    }else{
-
-      const {data,error} =
-        await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
-
-      if(error) throw error;
-
-      currentUser = data.user;
-
-      await loadProfile();
-
-      if(!currentProfile){
-
-        startOnboarding();
-
-      }else{
-
-        enterApp();
-
-      }
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    message.textContent =
-      friendlyAuthError(error.message);
-
-  }finally{
-
-    button.disabled = false;
-  }
-}
-
-function friendlyAuthError(message){
-
-  if(!message) return "Não foi possível concluir.";
-
-  if(message.toLowerCase().includes("invalid login")){
-    return "E-mail ou senha incorretos.";
-  }
-
-  if(message.toLowerCase().includes("already registered")){
-    return "Este e-mail já possui uma conta.";
-  }
-
-  if(message.toLowerCase().includes("password")){
-    return "A senha precisa ter pelo menos 6 caracteres.";
-  }
-
-  return message;
-}
-
-
-/* ==========================================================
-   PROFILE
-========================================================== */
-
-async function createOrUpdateProfile(user,name){
-
-  const safeName =
-    name ||
-    user.user_metadata?.display_name ||
-    user.email?.split("@")[0] ||
-    "NERVA";
-
-  const usernameBase =
-    normalizeUsername(safeName);
-
-  const username =
-    await findAvailableUsername(usernameBase,user.id);
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .upsert({
-        id:user.id,
-        username,
-        display_name:safeName,
-        bio:"",
-        avatar_url:"",
-        is_artist:false,
-        is_verified:false
-      })
-      .select()
-      .single();
-
-  if(error){
-    console.error(error);
-    return null;
-  }
-
-  currentProfile = data;
-
-  return data;
-}
-
-function normalizeUsername(value){
-
-  let result =
-    String(value || "nerva")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"")
-      .toLowerCase()
-      .replace(/[^a-z0-9_]/g,"")
-      .slice(0,18);
-
-  if(!result) result = "nerva";
-
-  return result;
-}
-
-async function findAvailableUsername(base,userId){
-
-  let username = base;
-
-  const {data} =
-    await supabaseClient
-      .from("profiles")
-      .select("username,id")
-      .eq("username",username)
-      .maybeSingle();
-
-  if(!data || data.id === userId){
-    return username;
-  }
-
-  for(let i=2;i<100;i++){
-
-    const candidate =
-      `${base}${i}`;
-
-    const {data:found} =
-      await supabaseClient
-        .from("profiles")
-        .select("id")
-        .eq("username",candidate)
-        .maybeSingle();
-
-    if(!found){
-      return candidate;
-    }
-  }
-
-  return `${base}${Date.now().toString().slice(-5)}`;
-}
-
-async function loadProfile(){
-
-  if(!currentUser) return null;
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id",currentUser.id)
-      .maybeSingle();
-
-  if(error){
-    console.error(error);
-    return null;
-  }
-
-  currentProfile = data;
-
-  return data;
-}
-
-
-/* ==========================================================
-   ONBOARDING
-========================================================== */
-
-function startOnboarding(){
-
-  onboardingStep = 1;
-
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("onboarding")
-    .classList.remove("hidden");
-
-  renderOnboarding();
-}
-
-function renderOnboarding(){
-
-  const content =
-    document.getElementById("onboardingContent");
-
-  const progress =
-    document.getElementById("progressBar");
-
-  progress.style.width =
-    `${onboardingStep * 25}%`;
-
-  if(onboardingStep === 1){
-
-    content.innerHTML = `
-
-      <div class="onboarding-content">
-
-        <h1 class="onboarding-title">
-          Bem-vindo à NERVA.
-        </h1>
-
-        <p class="onboarding-text">
-          Antes de entrar, queremos conhecer você.
-          Assim conseguimos construir uma experiência que realmente tenha a ver com seus interesses.
-        </p>
-
-        <div style="margin-top:30px">
-          <div class="label">
-            Como você quer participar da NERVA?
-          </div>
-
-          <div class="option-grid" style="grid-template-columns:1fr 1fr">
-
-            <button
-              class="option ${onboardingData.isArtist ? "" : "selected"}"
-              onclick="setArtist(false)">
-              Quero descobrir artistas
-            </button>
-
-            <button
-              class="option ${onboardingData.isArtist ? "selected" : ""}"
-              onclick="setArtist(true)">
-              Sou artista
-            </button>
-
-          </div>
-        </div>
-
-        <div class="onboarding-actions">
-          <div></div>
-
-          <button class="btn btn-primary"
-            onclick="nextOnboarding()">
-            Continuar
-          </button>
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-  if(onboardingStep === 2){
-
-    content.innerHTML = `
-
-      <div class="onboarding-content">
-
-        <h1 class="onboarding-title">
-          O que você quer descobrir?
-        </h1>
-
-        <p class="onboarding-text">
-          Escolha os gêneros que mais despertam seu interesse.
-          Você poderá mudar isso depois.
-        </p>
-
-        <div class="option-grid">
-
-          ${genres.map(genre=>`
-
-            <button
-              class="option ${
-                onboardingData.genres.includes(genre)
-                ? "selected"
-                : ""
-              }"
-              onclick="toggleGenre('${escapeHTML(genre)}')">
-
-              ${escapeHTML(genre)}
-
-            </button>
-
-          `).join("")}
-
-        </div>
-
-        <div class="onboarding-actions">
-
-          <button
-            class="btn btn-ghost"
-            onclick="previousOnboarding()">
-            Voltar
-          </button>
-
-          <button
-            class="btn btn-primary"
-            onclick="nextOnboarding()">
-            Continuar
-          </button>
-
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-  if(onboardingStep === 3){
-
-    const matching =
-      demoArtists.filter(artist=>{
-
-        if(onboardingData.genres.length === 0){
-          return true;
-        }
-
-        return artist.genres.some(
-          genre =>
-            onboardingData.genres.includes(genre)
-        );
-      });
-
-    content.innerHTML = `
-
-      <div class="onboarding-content">
-
-        <h1 class="onboarding-title">
-          Agora, conheça alguns artistas.
-        </h1>
-
-        <p class="onboarding-text">
-          Escolha alguns para começar a acompanhar.
-          Isso também ajuda a personalizar sua Home.
-        </p>
-
-        <div class="grid" style="margin-top:28px">
-
-          ${matching.map(artist=>`
-
-            <div
-              class="card artist-card"
-              onclick="toggleFollowOnboarding('${artist.id}')">
-
-              <div class="artist-avatar">
-                ${initials(artist.name)}
-              </div>
-
-              <div class="card-body">
-
-                <div class="card-title">
-
-                  ${escapeHTML(artist.name)}
-
-                  ${
-                    artist.verified
-                    ? `<span class="verified">✓</span>`
-                    : ""
-                  }
-
-                </div>
-
-                <div class="card-sub">
-                  @${escapeHTML(artist.username)}
-                </div>
-
-                <button
-                  class="btn ${
-                    followedArtists.includes(artist.id)
-                    ? "btn-secondary"
-                    : "btn-primary"
-                  }"
-                  style="margin-top:12px;width:100%"
-                  onclick="event.stopPropagation();toggleFollowOnboarding('${artist.id}')">
-
-                  ${
-                    followedArtists.includes(artist.id)
-                    ? "Seguindo"
-                    : "Seguir"
-                  }
-
-                </button>
-
-              </div>
-
-            </div>
-
-          `).join("")}
-
-        </div>
-
-        <div class="onboarding-actions">
-
-          <button
-            class="btn btn-ghost"
-            onclick="previousOnboarding()">
-            Voltar
-          </button>
-
-          <button
-            class="btn btn-primary"
-            onclick="nextOnboarding()">
-            Continuar
-          </button>
-
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-  if(onboardingStep === 4){
-
-    content.innerHTML = `
-
-      <div class="onboarding-content">
-
-        <h1 class="onboarding-title">
-          Tudo pronto.
-        </h1>
-
-        <p class="onboarding-text">
-          Sua NERVA está preparada.
-          A partir de agora, sua Home vai começar a mostrar artistas,
-          lançamentos, notícias e movimentos relacionados aos seus interesses.
-        </p>
-
-        <div class="card" style="margin-top:28px">
-
-          <div class="card-body">
-
-            <div class="card-title">
-              Seus interesses
-            </div>
-
-            <div style="
-              display:flex;
-              flex-wrap:wrap;
-              gap:7px;
-              margin-top:12px;
-            ">
-
-              ${
-                onboardingData.genres
-                  .map(g=>`
-                    <span style="
-                      background:var(--surface2);
-                      padding:7px 10px;
-                      border-radius:8px;
-                      color:#dfe4eb;
-                      font-size:13px;
-                    ">
-                      ${escapeHTML(g)}
-                    </span>
-                  `)
-                  .join("")
-              }
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="onboarding-actions">
-
-          <button
-            class="btn btn-ghost"
-            onclick="previousOnboarding()">
-            Voltar
-          </button>
-
-          <button
-            class="btn btn-primary"
-            onclick="finishOnboarding()">
-            Entrar na NERVA
-          </button>
-
-        </div>
-
-      </div>
-    `;
-  }
-}
-
-function setArtist(value){
-
-  onboardingData.isArtist = value;
-
-  renderOnboarding();
-}
-
-function toggleGenre(genre){
-
-  if(onboardingData.genres.includes(genre)){
-
-    onboardingData.genres =
-      onboardingData.genres.filter(
-        item => item !== genre
-      );
-
-  }else{
-
-    onboardingData.genres.push(genre);
-
-  }
-
-  renderOnboarding();
-}
-
-function toggleFollowOnboarding(id){
-
-  if(followedArtists.includes(id)){
-
-    followedArtists =
-      followedArtists.filter(
-        item=>item!==id
-      );
-
-  }else{
-
-    followedArtists.push(id);
-
-  }
-
-  renderOnboarding();
-}
-
-function nextOnboarding(){
-
-  if(onboardingStep === 2 &&
-     onboardingData.genres.length === 0){
-
-    toast("Escolha pelo menos um gênero para continuar.");
-
-    return;
-  }
-
-  onboardingStep++;
-
-  renderOnboarding();
-}
-
-function previousOnboarding(){
-
-  onboardingStep =
-    Math.max(1,onboardingStep-1);
-
-  renderOnboarding();
-}
-
-async function finishOnboarding(){
-
-  if(!currentUser){
-    return;
-  }
-
-  const username =
-    await findAvailableUsername(
-      normalizeUsername(
-        onboardingData.displayName ||
-        currentProfile?.display_name ||
-        currentUser.email.split("@")[0]
-      ),
-      currentUser.id
-    );
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .upsert({
-        id:currentUser.id,
-        username,
-        display_name:
-          onboardingData.displayName ||
-          currentProfile?.display_name ||
-          currentUser.email.split("@")[0],
-        bio:"",
-        avatar_url:"",
-        is_artist:onboardingData.isArtist,
-        is_verified:false
-      })
-      .select()
-      .single();
-
-  if(error){
-
-    console.error(error);
-
-    toast(
-      "Não conseguimos salvar seu perfil. Tente novamente."
-    );
-
-    return;
-  }
-
-  currentProfile = data;
-
-  localStorage.setItem(
-    `nerva_onboarding_${currentUser.id}`,
-    "done"
-  );
-
-  localStorage.setItem(
-    `nerva_genres_${currentUser.id}`,
-    JSON.stringify(onboardingData.genres)
-  );
-
-  document
-    .getElementById("onboarding")
-    .classList.add("hidden");
-
-  enterApp();
-}
-
-
-/* ==========================================================
-   ENTRAR NA APLICAÇÃO
-========================================================== */
-
-function enterApp(){
-
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("onboarding")
-    .classList.add("hidden");
-
-  document
-    .getElementById("app")
-    .classList.remove("hidden");
-
-  updateTopAvatar();
-
-  navigate("home");
-}
-
-function updateTopAvatar(){
-
-  const avatar =
-    document.getElementById("topAvatar");
-
-  avatar.textContent =
-    initials(
-      currentProfile?.display_name ||
-      currentUser?.email ||
-      "N"
-    );
-}
-
-
-/* ==========================================================
-   NAVEGAÇÃO
-========================================================== */
-
-function navigate(page){
-
-  currentPage = page;
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item=>{
-      item.classList.toggle(
-        "active",
-        item.dataset.page === page
-      );
-    });
-
-  document
-    .querySelectorAll(".mobile-nav button")
-    .forEach(item=>{
-      item.classList.toggle(
-        "active",
-        item.dataset.mobile === page
-      );
-    });
-
-  renderPage(page);
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* ==========================================================
-   HOME
-========================================================== */
-
-function renderHome(){
-
-  const name =
-    currentProfile?.display_name ||
-    "artista";
-
-  const selectedGenres =
-    JSON.parse(
-      localStorage.getItem(
-        `nerva_genres_${currentUser?.id}`
-      ) || "[]"
-    );
-
-  const recommended =
-    demoArtists.filter(artist=>{
-
-      if(selectedGenres.length===0){
-        return true;
-      }
-
-      return artist.genres.some(
-        g=>selectedGenres.includes(g)
-      );
-
-    }).slice(0,4);
-
-  return `
-
-    <div class="hero">
-
-      <div class="hero-content">
-
-        <div class="hero-label">
-          A cena acontece aqui
-        </div>
-
-        <h1>
-          Bem-vindo à NERVA, ${escapeHTML(name)}.
-        </h1>
-
-        <p>
-          Descubra artistas, acompanhe novas eras,
-          conheça lançamentos, participe de fandoms
-          e acompanhe tudo que movimenta a comunidade.
-        </p>
-
-        <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
-
-          <button
-            class="btn btn-primary"
-            onclick="navigate('discover')">
-            Descobrir artistas
-          </button>
-
-          <button
-            class="btn btn-secondary"
-            onclick="navigate('charts')">
-            Ver charts
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          🔴 Agora
-        </div>
-
-        <button class="link-btn"
-          onclick="navigate('now')">
-          Ver tudo
-        </button>
-
-      </div>
-
-      <div class="card">
-
-        <div class="card-body">
-
-          <div class="card-title">
-            O que está acontecendo agora
-          </div>
-
-          <div class="card-sub">
-            Premieres, lançamentos, anúncios,
-            movimentos da comunidade e acontecimentos importantes.
-          </div>
-
-          <button
-            class="btn btn-danger"
-            style="margin-top:15px"
-            onclick="navigate('now')">
-            Explorar Agora
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          🔥 Em alta
-        </div>
-
-        <button class="link-btn"
-          onclick="navigate('charts')">
-          Ver charts
-        </button>
-
-      </div>
-
-      <div class="grid">
-
-        ${demoArtists.slice(0,4).map(
-          artistCard
-        ).join("")}
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          🌟 Recomendados para você
-        </div>
-
-        <button class="link-btn"
-          onclick="navigate('discover')">
-          Descobrir
-        </button>
-
-      </div>
-
-      <div class="grid">
-
-        ${
-          recommended.length
-          ? recommended.map(artistCard).join("")
-          : `
-            <div class="card">
-              <div class="card-body">
-                Ainda estamos aprendendo seus interesses.
-              </div>
-            </div>
-          `
-        }
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          💿 Novos lançamentos
-        </div>
-
-        <button class="link-btn"
-          onclick="navigate('albums')">
-          Ver discografia
-        </button>
-
-      </div>
-
-      <div class="grid">
-
-        ${demoAlbums.map(albumCard).join("")}
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          📰 Últimas notícias
-        </div>
-
-        <button class="link-btn"
-          onclick="navigate('news')">
-          Central de notícias
-        </button>
-
-      </div>
-
-      <div class="grid">
-
-        ${demoNews.map(newsCard).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   ARTIST CARD
-========================================================== */
-
-function artistCard(artist){
-
-  return `
-
-    <div
-      class="card artist-card"
-      onclick="openArtist('${artist.id}')">
-
-      <div class="artist-avatar">
-        ${initials(artist.name)}
-      </div>
-
-      <div class="card-body">
-
-        <div class="card-title">
-
-          ${escapeHTML(artist.name)}
-
-          ${
-            artist.verified
-            ? `<span class="verified">✓</span>`
-            : ""
-          }
-
-        </div>
-
-        <div class="card-sub">
-          @${escapeHTML(artist.username)}
-        </div>
-
-        <div class="card-sub" style="margin-top:10px">
-          ${artist.followers.toLocaleString("pt-BR")} seguidores
-        </div>
-
-      </div>
-
-    </div>
-  `;
-}
-
-
-/* ==========================================================
-   ALBUM CARD
-========================================================== */
-
-function albumCard(album){
-
-  return `
-
-    <div
-      class="card"
-      onclick="openAlbum('${escapeHTML(album.title)}')"
-      style="cursor:pointer">
-
-      <div class="cover">
-        ${initials(album.title)}
-      </div>
-
-      <div class="card-body">
-
-        <div class="card-title">
-          ${escapeHTML(album.title)}
-        </div>
-
-        <div class="card-sub">
-          ${escapeHTML(album.artist)}
-        </div>
-
-        <div class="card-sub">
-          ${escapeHTML(album.type)} · ${escapeHTML(album.year)}
-        </div>
-
-      </div>
-
-    </div>
-  `;
-}
-
-
-/* ==========================================================
-   NEWS CARD
-========================================================== */
-
-function newsCard(item){
-
-  return `
-
-    <div class="card">
-
-      <div class="card-body">
-
-        <div style="
-          color:var(--coral);
-          font-size:11px;
-          font-weight:800;
-          letter-spacing:1px;
-        ">
-          ${escapeHTML(item.tag)}
-        </div>
-
-        <div class="card-title" style="margin-top:9px">
-          ${escapeHTML(item.title)}
-        </div>
-
-        <div class="card-sub" style="line-height:1.5">
-          ${escapeHTML(item.text)}
-        </div>
-
-        <button
-          class="link-btn"
-          style="margin-top:14px"
-          onclick="openNews('${escapeHTML(item.title)}')">
-          Ler notícia
-        </button>
-
-      </div>
-
-    </div>
-  `;
-}
-
-
-/* ==========================================================
-   DESCOBRIR
-========================================================== */
-
-function renderDiscover(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Descobrir
-      </div>
-
-      <div class="page-subtitle">
-        Encontre artistas, novos projetos e movimentos da comunidade.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="section-title">
-        Artistas em destaque
-      </div>
-
-      <div class="grid" style="margin-top:16px">
-        ${demoArtists.map(artistCard).join("")}
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-title">
-        Categorias
-      </div>
-
-      <div class="option-grid">
-
-        ${genres.slice(0,12).map(g=>`
-
-          <button
-            class="option"
-            onclick="searchGenre('${escapeHTML(g)}')">
-            ${escapeHTML(g)}
-          </button>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   AGORA
-========================================================== */
-
-function renderNow(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Agora
-      </div>
-
-      <div class="page-subtitle">
-        O que está acontecendo neste momento na comunidade.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="card">
-
-        <div class="card-body">
-
-          <div style="
-            color:var(--red);
-            font-weight:900;
-            font-size:12px;
-            letter-spacing:1px;
-          ">
-            ● AO VIVO
-          </div>
-
-          <h2 style="margin-top:10px">
-            Nenhuma Premiere acontecendo agora
-          </h2>
-
-          <p style="margin-top:8px;color:var(--muted)">
-            Quando uma Premiere estiver acontecendo,
-            ela aparecerá aqui.
-          </p>
-
-          <button
-            class="btn btn-secondary"
-            style="margin-top:16px"
-            onclick="openPremiereInfo()">
-            Como funciona?
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-title">
-        Movimentos recentes
-      </div>
-
-      <div class="chart-list" style="margin-top:15px">
-
-        <div class="chart-row">
-          <div class="chart-number">01</div>
-          <div class="chart-art">A</div>
-          <div class="chart-info">
-            <div class="chart-name">Nova era anunciada</div>
-            <div class="chart-meta">Aurora · há 2h</div>
-          </div>
-        </div>
-
-        <div class="chart-row">
-          <div class="chart-number">02</div>
-          <div class="chart-art">L</div>
-          <div class="chart-info">
-            <div class="chart-name">Novo lançamento</div>
-            <div class="chart-meta">Lunna · há 5h</div>
-          </div>
-        </div>
-
-        <div class="chart-row">
-          <div class="chart-number">03</div>
-          <div class="chart-art">N</div>
-          <div class="chart-info">
-            <div class="chart-name">Artista em ascensão</div>
-            <div class="chart-meta">Nox · hoje</div>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   CHARTS
-========================================================== */
-
-function renderCharts(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Charts
-      </div>
-
-      <div class="page-subtitle">
-        Os rankings que mostram o movimento da cena.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="section-title">
-        HOT 50
-      </div>
-
-      <div class="chart-list" style="margin-top:15px">
-
-        ${demoArtists
-          .slice()
-          .sort((a,b)=>b.followers-a.followers)
-          .map((artist,index)=>`
-
-          <div class="chart-row">
-
-            <div class="chart-number">
-              ${String(index+1).padStart(2,"0")}
-            </div>
-
-            <div class="chart-art">
-              ${initials(artist.name)}
-            </div>
-
-            <div class="chart-info">
-
-              <div class="chart-name">
-                ${escapeHTML(artist.name)}
-
-                ${
-                  artist.verified
-                  ? `<span class="verified">✓</span>`
-                  : ""
-                }
-
-              </div>
-
-              <div class="chart-meta">
-                ${artist.trend} ·
-                ${artist.followers.toLocaleString("pt-BR")} seguidores
-              </div>
-
-            </div>
-
-            <div class="chart-score">
-              ${Math.round(
-                artist.followers/100
-              )} pts
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-title">
-        Categorias
-      </div>
-
-      <div class="grid" style="margin-top:15px">
-
-        ${[
-          ["TOP ÁLBUNS","Os álbuns mais movimentados."],
-          ["RISING","Quem está crescendo mais rápido."],
-          ["FAN FAVORITES","Os favoritos dos fãs."],
-          ["VISUAL CHART","Os visuais em destaque."],
-          ["LABEL CHART","Gravadoras em evidência."],
-          ["MOMENTS","Momentos que marcaram a semana."]
-        ].map(item=>`
-
-          <div class="card">
-
-            <div class="card-body">
-
-              <div class="card-title">
-                ${item[0]}
-              </div>
-
-              <div class="card-sub">
-                ${item[1]}
-              </div>
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   ARTISTAS
-========================================================== */
-
-function renderArtists(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Artistas
-      </div>
-
-      <div class="page-subtitle">
-        Conheça quem está construindo a cena.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          Verificados
-        </div>
-
-      </div>
-
-      <div class="grid">
-
-        ${
-          demoArtists
-            .filter(a=>a.verified)
-            .map(artistCard)
-            .join("")
-        }
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          Em ascensão
-        </div>
-
-      </div>
-
-      <div class="grid">
-
-        ${
-          demoArtists
-            .filter(a=>a.trend==="Em ascensão")
-            .map(artistCard)
-            .join("")
-        }
-
-      </div>
-
-    </section>
-
-    <section class="section">
-
-      <div class="section-head">
-
-        <div class="section-title">
-          Todos os artistas
-        </div>
-
-      </div>
-
-      <div class="grid">
-
-        ${demoArtists.map(artistCard).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   ÁLBUNS
-========================================================== */
-
-function renderAlbums(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Álbuns
-      </div>
-
-      <div class="page-subtitle">
-        Discografias, singles e projetos que definem cada era.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="grid">
-        ${demoAlbums.map(albumCard).join("")}
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   ERAS
-========================================================== */
-
-function renderEras(){
-
-  const eras = [
-    ["NEON HEART","Aurora","Era Pop"],
-    ["AFTER DARK","Lunna","Era noturna"],
-    ["NO SIGNAL","Nox","Era urbana"],
-    ["SILK","Maya","Era R&B"]
-  ];
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Eras
-      </div>
-
-      <div class="page-subtitle">
-        Conceitos, estéticas e capítulos das carreiras dos artistas.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="grid">
-
-        ${eras.map(era=>`
-
-          <div class="card">
-
-            <div class="cover">
-              ${initials(era[0])}
-            </div>
-
-            <div class="card-body">
-
-              <div class="card-title">
-                ${escapeHTML(era[0])}
-              </div>
-
-              <div class="card-sub">
-                ${escapeHTML(era[1])}
-              </div>
-
-              <div class="card-sub">
-                ${escapeHTML(era[2])}
-              </div>
-
-              <button
-                class="btn btn-secondary"
-                style="margin-top:13px"
-                onclick="openEra('${escapeHTML(era[0])}')">
-                Ver era
-              </button>
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   GRAVADORAS
-========================================================== */
-
-function renderLabels(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Gravadoras
-      </div>
-
-      <div class="page-subtitle">
-        Conheça as labels que movimentam a comunidade.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="grid">
-
-        ${demoLabels.map(label=>`
-
-          <div class="card">
-
-            <div class="cover">
-              ${initials(label.name)}
-            </div>
-
-            <div class="card-body">
-
-              <div class="card-title">
-                ${escapeHTML(label.name)}
-              </div>
-
-              <div class="card-sub">
-                ${label.artists} artistas
-              </div>
-
-              <div class="card-sub">
-                ${escapeHTML(label.genre)}
-              </div>
-
-              <button
-                class="btn btn-secondary"
-                style="margin-top:13px"
-                onclick="openLabel('${escapeHTML(label.name)}')">
-                Ver gravadora
-              </button>
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   FANDOMS
-========================================================== */
-
-function renderFandoms(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Fandoms
-      </div>
-
-      <div class="page-subtitle">
-        Comunidades de fãs organizadas dentro da NERVA.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div class="grid">
-
-        ${demoArtists.slice(0,4).map(artist=>`
-
-          <div class="card">
-
-            <div class="card-body">
-
-              <div class="card-title">
-                Fãs de ${escapeHTML(artist.name)}
-              </div>
-
-              <div class="card-sub">
-                Comunidade oficial de fãs
-              </div>
-
-              <div style="margin-top:15px">
-
-                <button
-                  class="btn btn-primary"
-                  onclick="joinFandom('${escapeHTML(artist.name)}')">
-                  Entrar no fandom
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   NOTÍCIAS
-========================================================== */
-
-function renderNews(){
-
-  return `
-
-    <div>
-      <div class="page-title">
-        Central de Notícias
-      </div>
-
-      <div class="page-subtitle">
-        O que está acontecendo na comunidade.
-      </div>
-    </div>
-
-    <section class="section">
-
-      <div style="
-        display:grid;
-        gap:12px;
-      ">
-
-        ${demoNews.map(item=>`
-
-          <div class="card">
-
-            <div class="card-body">
-
-              <div style="
-                color:var(--coral);
-                font-size:11px;
-                font-weight:900;
-                letter-spacing:1px;
-              ">
-                ${escapeHTML(item.tag)}
-              </div>
-
-              <h2 style="margin-top:8px">
-                ${escapeHTML(item.title)}
-              </h2>
-
-              <p style="
-                color:var(--muted);
-                margin-top:8px;
-                line-height:1.55;
-              ">
-                ${escapeHTML(item.text)}
-              </p>
-
-              <button
-                class="btn btn-secondary"
-                style="margin-top:15px"
-                onclick="openNews('${escapeHTML(item.title)}')">
-                Ler notícia
-              </button>
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   PERFIL
-========================================================== */
-
-function renderProfile(){
-
-  const name =
-    currentProfile?.display_name ||
-    "Usuário NERVA";
-
-  const username =
-    currentProfile?.username ||
-    "nerva";
-
-  const bio =
-    currentProfile?.bio ||
-    "Ainda não adicionou uma biografia.";
-
-  return `
-
-    <div class="profile-head">
-
-      <div class="profile-avatar">
-        ${initials(name)}
-      </div>
-
-      <div class="profile-info">
-
-        <div class="profile-name">
-          ${escapeHTML(name)}
-
-          ${
-            currentProfile?.is_verified
-            ? `<span class="verified">✓</span>`
-            : ""
-          }
-
-        </div>
-
-        <div class="profile-handle">
-          @${escapeHTML(username)}
-        </div>
-
-        <div class="profile-bio">
-          ${escapeHTML(bio)}
-        </div>
-
-        <div class="stats">
-
-          <div class="stat">
-            <strong>${followedArtists.length}</strong>
-            <span>Seguindo</span>
-          </div>
-
-          <div class="stat">
-            <strong>0</strong>
-            <span>Seguidores</span>
-          </div>
-
-          <div class="stat">
-            <strong>0</strong>
-            <span>Conquistas</span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <button
-        class="btn btn-secondary"
-        onclick="editProfile()">
-        Editar perfil
-      </button>
-
-    </div>
-
-    <section class="section">
-
-      <div class="section-title">
-        Minha atividade
-      </div>
-
-      <div class="grid" style="margin-top:15px">
-
-        <div class="card">
-          <div class="card-body">
-            <div class="card-title">
-              Momentos
-            </div>
-            <div class="card-sub">
-              Seus conteúdos temporários aparecerão aqui.
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-body">
-            <div class="card-title">
-              Fandoms
-            </div>
-            <div class="card-sub">
-              Seus fandoms e comunidades.
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-body">
-            <div class="card-title">
-              Conquistas
-            </div>
-            <div class="card-sub">
-              Marcos alcançados na NERVA.
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-body">
-            <div class="card-title">
-              Histórico
-            </div>
-            <div class="card-sub">
-              Sua atividade na comunidade.
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-  `;
-}
-
-
-/* ==========================================================
-   SEARCH
-========================================================== */
-
-function performSearch(){
-
-  const value =
-    document
-      .getElementById("globalSearch")
-      .value
-      .trim();
-
-  if(!value){
-    return;
-  }
-
-  const query =
-    value.toLowerCase();
-
-  const artists =
-    demoArtists.filter(
-      artist =>
-        artist.name.toLowerCase().includes(query) ||
-        artist.username.toLowerCase().includes(query) ||
-        artist.genres.some(
-          g=>g.toLowerCase().includes(query)
-        )
-    );
-
-  const albums =
-    demoAlbums.filter(
-      album =>
-        album.title.toLowerCase().includes(query) ||
-        album.artist.toLowerCase().includes(query)
-    );
-
-  document.getElementById("main").innerHTML = `
-
-    <div>
-      <div class="page-title">
-        Resultados
-      </div>
-
-      <div class="page-subtitle">
-        Busca por “${escapeHTML(value)}”
-      </div>
-    </div>
-
-    <div class="search-results">
-
-      <div class="result-block">
-
-        <div class="section-title">
-          Artistas
-        </div>
-
-        <div class="result-list" style="margin-top:14px">
-
-          ${
-            artists.length
-            ? artists.map(artist=>`
-
-              <div
-                class="result"
-                onclick="openArtist('${artist.id}')">
-
-                <div class="chart-art">
-                  ${initials(artist.name)}
-                </div>
-
-                <div>
-                  <strong>
-                    ${escapeHTML(artist.name)}
-                  </strong>
-
-                  <div class="chart-meta">
-                    @${escapeHTML(artist.username)}
-                  </div>
-                </div>
-
-              </div>
-
-            `).join("")
-            : `<div class="card"><div class="card-body">Nenhum artista encontrado.</div></div>`
-          }
-
-        </div>
-
-      </div>
-
-      <div class="result-block">
-
-        <div class="section-title">
-          Álbuns
-        </div>
-
-        <div class="result-list" style="margin-top:14px">
-
-          ${
-            albums.length
-            ? albums.map(album=>`
-
-              <div
-                class="result"
-                onclick="openAlbum('${escapeHTML(album.title)}')">
-
-                <div class="chart-art">
-                  ${initials(album.title)}
-                </div>
-
-                <div>
-                  <strong>
-                    ${escapeHTML(album.title)}
-                  </strong>
-
-                  <div class="chart-meta">
-                    ${escapeHTML(album.artist)}
-                  </div>
-                </div>
-
-              </div>
-
-            `).join("")
-            : `<div class="card"><div class="card-body">Nenhum álbum encontrado.</div></div>`
-          }
-
-        </div>
-
-      </div>
-
-    </div>
-  `;
-}
-
-
-/* ==========================================================
-   DETALHES
-========================================================== */
-
-function openArtist(id){
-
-  const artist =
-    demoArtists.find(
-      item=>item.id===id
-    );
-
-  if(!artist) return;
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <div>
-
-        <div class="auth-brand"
-             style="font-size:20px">
-          NERVA
-        </div>
-
-        <h2 style="margin-top:15px">
-          ${escapeHTML(artist.name)}
-
-          ${
-            artist.verified
-            ? `<span class="verified">✓</span>`
-            : ""
-          }
-
-        </h2>
-
-        <p>
-          @${escapeHTML(artist.username)}
-        </p>
-
-      </div>
-
-      <button
-        class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div style="margin-top:22px">
-
-      <div class="profile-avatar">
-        ${initials(artist.name)}
-      </div>
-
-      <p style="margin-top:16px">
-        Artista da comunidade NERVA.
-        Aqui você poderá acompanhar carreira,
-        discografia, eras, visuais, fandom,
-        notícias e conquistas.
-      </p>
-
-      <div style="
-        display:flex;
-        gap:8px;
-        flex-wrap:wrap;
-        margin-top:15px;
-      ">
-
-        ${artist.genres.map(g=>`
-
-          <span style="
-            background:var(--surface);
-            border:1px solid var(--border);
-            padding:7px 9px;
-            border-radius:8px;
-            font-size:12px;
-          ">
-            ${escapeHTML(g)}
-          </span>
-
-        `).join("")}
-
-      </div>
-
-      <div style="
-        display:flex;
-        gap:10px;
-        margin-top:20px;
-      ">
-
-        <button
-          class="btn btn-primary"
-          onclick="followArtist('${artist.id}')">
-          ${
-            followedArtists.includes(artist.id)
-            ? "Seguindo"
-            : "Seguir artista"
-          }
-        </button>
-
-        <button
-          class="btn btn-secondary"
-          onclick="closeModal();navigate('albums')">
-          Discografia
-        </button>
-
-      </div>
-
-    </div>
-  `);
-}
-
-function followArtist(id){
-
-  if(followedArtists.includes(id)){
-
-    followedArtists =
-      followedArtists.filter(
-        item=>item!==id
-      );
-
-    toast("Você deixou de seguir este artista.");
-
-  }else{
-
-    followedArtists.push(id);
-
-    toast("Artista seguido.");
-
-  }
-
-  closeModal();
-}
-
-function openAlbum(title){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <div>
-        <div class="auth-brand"
-             style="font-size:20px">
-          NERVA
-        </div>
-
-        <h2 style="margin-top:15px">
-          ${escapeHTML(title)}
-        </h2>
-      </div>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:18px">
-      Página do projeto preparada para receber
-      capa, tracklist, data de lançamento,
-      era, comentários, estatísticas e informações do artista.
-    </p>
-
-    <div class="card" style="margin-top:20px">
-      <div class="card-body">
-
-        <div class="card-title">
-          Tracklist
-        </div>
-
-        <div class="card-sub">
-          As faixas serão adicionadas pelo artista.
-        </div>
-
-      </div>
-    </div>
-
-  `);
-}
-
-function openEra(title){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        Era ${escapeHTML(title)}
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:15px">
-      Uma era na NERVA reúne conceito,
-      estética, álbum, singles, visuais,
-      datas e momentos importantes de uma fase da carreira.
-    </p>
-
-  `);
-}
-
-function openLabel(name){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        ${escapeHTML(name)}
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:15px">
-      Página da gravadora.
-    </p>
-
-    <div class="card" style="margin-top:20px">
-      <div class="card-body">
-        <div class="card-title">
-          Artistas
-        </div>
-        <div class="card-sub">
-          Artistas vinculados à gravadora aparecerão aqui.
-        </div>
-      </div>
-    </div>
-
-  `);
-}
-
-function openNews(title){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        ${escapeHTML(title)}
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:16px">
-      Esta é uma área editorial da NERVA.
-      Notícias oficiais poderão reunir lançamentos,
-      eras, contratações, premiações,
-      acontecimentos e tendências da comunidade.
-    </p>
-
-  `);
-}
-
-
-/* ==========================================================
-   FANDOM
-========================================================== */
-
-function joinFandom(name){
-
-  toast(
-    `Você entrou no fandom de ${name}.`
-  );
-}
-
-
-/* ==========================================================
-   VERIFICAÇÃO
-========================================================== */
-
-function openVerification(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <div>
-
-        <div class="auth-brand"
-          style="font-size:20px">
-          NERVA
-        </div>
-
-        <h2 style="margin-top:15px">
-          Verificação
-        </h2>
-
-      </div>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:15px">
-      A verificação é destinada a artistas
-      que desejam confirmar oficialmente sua identidade
-      dentro da plataforma.
-    </p>
-
-    <div style="
-      display:grid;
-      gap:10px;
-      margin-top:20px;
-    ">
-
-      <div class="card">
-        <div class="card-body">
-          <strong>✓ Selo de verificação</strong>
-          <div class="card-sub">
-            Identificação oficial no perfil,
-            busca, charts e lançamentos.
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <strong>⭐ Destaque editorial</strong>
-          <div class="card-sub">
-            Maior possibilidade de aparecer
-            em áreas editoriais relevantes.
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <strong>📊 Estatísticas extras</strong>
-          <div class="card-sub">
-            Recursos adicionais para acompanhar
-            o desempenho do perfil.
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-body">
-          <strong>💬 Suporte prioritário</strong>
-          <div class="card-sub">
-            Atendimento prioritário para contas verificadas.
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="card"
-      style="
-        margin-top:18px;
-        background:rgba(184,26,43,.12);
-      ">
-
-      <div class="card-body">
-
-        <strong>
-          Assinatura mensal
-        </strong>
-
-        <div style="
-          font-size:26px;
-          font-weight:900;
-          color:var(--coral);
-          margin-top:5px;
-        ">
-          R$ 9,90
-        </div>
-
-        <div class="card-sub">
-          Valor configurável pelo administrador.
-          O pagamento real será integrado posteriormente
-          a um provedor com confirmação automática.
-        </div>
-
-      </div>
+    <div class="field">
+
+      <label>Senha</label>
+
+      <input
+        id="password"
+        type="password"
+        minlength="6"
+        autocomplete="current-password"
+      >
 
     </div>
 
     <button
-      class="btn btn-secondary"
-      style="margin-top:18px;width:100%"
-      onclick="openVerificationFAQ()">
-      Como funciona?
+      id="authButton"
+      class="btn primary"
+      style="width:100%;margin-top:5px"
+      onclick="submitAuth()"
+    >
+      Entrar
     </button>
 
-  `);
-}
-
-function openVerificationFAQ(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        Como funciona a verificação?
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div style="margin-top:18px">
-
-      <p>
-        <strong>O pagamento garante o selo?</strong><br>
-        Não. O pagamento é referente ao pedido e aos benefícios
-        do serviço. A aprovação segue os critérios da NERVA.
-      </p>
-
-      <p style="margin-top:16px">
-        <strong>Quanto tempo dura?</strong><br>
-        A assinatura poderá durar 30 dias e precisar ser renovada.
-      </p>
-
-      <p style="margin-top:16px">
-        <strong>Como será o pagamento?</strong><br>
-        A versão final poderá usar Pix com cobrança dinâmica,
-        confirmação automática e webhook do provedor.
-      </p>
-
-      <p style="margin-top:16px">
-        <strong>Posso fazer uma pergunta?</strong><br>
-        Sim. A área de suporte será integrada ao sistema da NERVA.
-      </p>
-
-    </div>
-
-  `);
-}
-
-
-/* ==========================================================
-   SUPPORT
-========================================================== */
-
-function openSupport(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <div>
-
-        <div class="auth-brand"
-          style="font-size:20px">
-          NERVA
-        </div>
-
-        <h2 style="margin-top:15px">
-          Suporte NERVA
-        </h2>
-
-      </div>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:15px">
-      Conte o que aconteceu. O sistema poderá
-      identificar problemas comuns e encaminhar
-      casos que precisem de análise.
-    </p>
-
-    <div class="form">
-
-      <textarea
-        id="supportText"
-        class="textarea"
-        placeholder="Ex.: Meu perfil não aparece nos artistas."></textarea>
-
-      <button
-        class="btn btn-primary"
-        onclick="sendSupport()">
-        Enviar problema
-      </button>
-
-    </div>
-
-  `);
-}
-
-function sendSupport(){
-
-  const text =
-    document.getElementById("supportText")
-      ?.value.trim();
-
-  if(!text){
-
-    toast("Descreva o problema primeiro.");
-
-    return;
-  }
-
-  closeModal();
-
-  toast(
-    "Problema registrado para análise."
-  );
-}
-
-
-/* ==========================================================
-   PREMIERE
-========================================================== */
-
-function openPremiereInfo(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        Premiere
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <p style="margin-top:16px">
-      A Premiere será o espaço para grandes
-      lançamentos: álbum, single ou nova era.
-    </p>
-
-    <div class="card" style="margin-top:18px">
-      <div class="card-body">
-
-        <div class="card-title">
-          Durante a Premiere
-        </div>
-
-        <div class="card-sub">
-          Contagem regressiva, visual,
-          informações do lançamento,
-          comentários e participação dos fãs.
-        </div>
-
-      </div>
-    </div>
-
-  `);
-}
-
-
-/* ==========================================================
-   NOTIFICAÇÕES
-========================================================== */
-
-function showNotifications(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        Notificações
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div style="margin-top:18px">
-
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title">
-            Tudo tranquilo por enquanto.
-          </div>
-          <div class="card-sub">
-            Novos lançamentos, notícias,
-            seguidores e eventos aparecerão aqui.
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  `);
-}
-
-
-/* ==========================================================
-   EDITAR PERFIL
-========================================================== */
-
-function editProfile(){
-
-  openModal(`
-
-    <div class="modal-head">
-
-      <h2>
-        Editar perfil
-      </h2>
-
-      <button class="close"
-        onclick="closeModal()">
-        ×
-      </button>
-
-    </div>
-
-    <div class="form">
-
-      <div>
-
-        <div class="label">
-          Nome
-        </div>
-
-        <input
-          id="editName"
-          class="input"
-          value="${escapeHTML(
-            currentProfile?.display_name || ""
-          )}">
-
-      </div>
-
-      <div>
-
-        <div class="label">
-          Biografia
-        </div>
-
-        <textarea
-          id="edit
+  </div>
+
+</div>
+
+<!-- =========================
+     APLICAÇÃO
+========================= -->
+
+<div id="app" class="app hidden">
+
+<header class="top">
+
+  <div class="logo">
+    NERVA
+  </div>
+
+  <div class="search">
+
+    <input
+      id="searchInput"
+      placeholder="Buscar na NERVA..."
+      onkeydown="if(event.key==='Enter')doSearch()"
+    >
+
+  </div>
+
+  <button
+    class="btn ghost"
+    onclick="openProfileModal()"
+  >
+    Perfil
+  </button>
+
+  <button
+    class="btn ghost"
+    onclick="logout()"
+  >
+    Sair
+  </button>
+
+</header>
+
+<div class="layout">
+
+<aside class="side">
+
+  <div class="nav">
+
+    <button
+      data-view="home"
+      onclick="go('home')"
+    >
+      Início
+    </button>
+
+    <button
+      data-view="discover"
+      onclick="go('discover')"
+    >
+      Descobrir
+    </button>
+
+    <button
+      data-view="now"
+      onclick="go('now')"
+    >
+      Agora
+    </button>
+
+    <button
+      data-view="charts"
+      onclick="go('charts')"
+    >
+      Charts
+    </button>
+
+    <button
+      data-view="artists"
+      onclick="go('artists')"
+    >
+      Artistas
+    </button>
+
+    <button
+      data-view="albums"
+      onclick="go('albums')"
+    >
+      Álbuns
+    </button>
+
+    <button
+      data-view="eras"
+      onclick="go('eras')"
+    >
+      Eras
+    </button>
+
+    <button
+      data-view="labels"
+      onclick="go('labels')"
+    >
+      Gravadoras
+    </button>
+
+    <button
+      data-view="fandoms"
+      onclick="go('fandoms')"
+    >
+      Fandoms
+    </button>
+
+    <button
+      data-view="news"
+      onclick="go('news')"
+    >
+      Notícias
+    </button>
+
+    <button
+      data-view="support"
+      onclick="go('support')"
+    >
+      Suporte
+    </button>
+
+  </div>
+
+</aside>
+
+<main class="main">
+
+<section
+  id="home"
+  class="view"
+></section>
+
+<section
+  id="discover"
+  class="view"
+></section>
+
+<section
+  id="now"
+  class="view"
+></section>
+
+<section
+  id="charts"
+  class="view"
+></section>
+
+<section
+  id="artists"
+  class="view"
+></section>
+
+<section
+  id="albums"
+  class="view"
+></section>
+
+<section
+  id="eras"
+  class="view"
+></section>
+
+<section
+  id="labels"
+  class="view"
+></section>
+
+<section
+  id="fandoms"
+  class="view"
+></section>
+
+<section
+  id="news"
+  class="view"
+></section>
+
+<section
+  id="support"
+  class="view"
+></section>
+
+<section
+  id="results"
+  class="view"
+></section>
+
+</main>
+
+</div>
+
+<nav class="mobile">
+
+<button
+  data-view="home"
+  onclick="go('home')"
+>
+  Início
+</button>
+
+<button
+  data-view="discover"
+  onclick="go('discover')"
+>
+  Descobrir
+</button>
+
+<button
+  data-view="now"
+  onclick="go('now')"
+>
+  Agora
+</button>
+
+<button
+  data-view="charts"
+  onclick="go('charts')"
+>
+  Charts
+</button>
+
+<button
+  data-view="artists"
+  onclick="go('artists')"
+>
+  Artistas
+</button>
+
+</nav>
+
+</div>
+
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+  id="modal"
+  class="modal hidden"
+>
+
+<div class="modalbox">
+
+<div class="between">
+
+<h2 id="modalTitle">
+NERVA
+</h2>
+
+<button
+  class="btn"
+  onclick="closeModal()"
+>
+Fechar
+</button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL =
+  "https://vtjibeowavgzgjuzquif.supabase.co";
+
+/*
+  COLE AQUI SOMENTE A SUA
+  CHAVE PUBLICÁVEL DO SUPABASE.
+
+  NÃO COLOQUE A SECRET KEY.
+*/
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "COLE_AQUI_SUA_PUBLISHABLE_KEY";
+
+let sb = null;
+let session = null;
+let profile = null;
+
+let artists = [];
+let albums = [];
+let eras = [];
+let labels = [];
+let fandoms = [];
+let news = [];
+
+let currentView = "home";
+let authMode = "login";
+
+const esc = s =>
+  String(s ?? "").replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp
