@@ -373,7 +373,6 @@ main{
 
 <main>
 
-<!-- HOME -->
 <section id="home" class="page active">
 
   <div class="hero">
@@ -458,7 +457,6 @@ main{
 
 </section>
 
-<!-- DESCOBRIR -->
 <section id="discover" class="page">
   <div class="sectionHead">
     <h2>Descobrir</h2>
@@ -482,7 +480,6 @@ main{
   </div>
 </section>
 
-<!-- ARTISTAS -->
 <section id="artists" class="page">
   <div class="sectionHead">
     <h2>Artistas</h2>
@@ -500,7 +497,6 @@ main{
   </div>
 </section>
 
-<!-- ALBUNS -->
 <section id="albums" class="page">
   <div class="sectionHead">
     <h2>Álbuns & Discografia</h2>
@@ -516,7 +512,6 @@ main{
   </div>
 </section>
 
-<!-- ERAS -->
 <section id="eras" class="page">
   <div class="sectionHead">
     <h2>Eras</h2>
@@ -534,7 +529,6 @@ main{
   </div>
 </section>
 
-<!-- GRAVADORAS -->
 <section id="labels" class="page">
   <div class="sectionHead">
     <h2>Gravadoras</h2>
@@ -550,7 +544,6 @@ main{
   </div>
 </section>
 
-<!-- FANDOMS -->
 <section id="fandoms" class="page">
   <div class="sectionHead">
     <h2>Fandoms</h2>
@@ -566,7 +559,6 @@ main{
   </div>
 </section>
 
-<!-- CHARTS -->
 <section id="charts" class="page">
   <div class="sectionHead">
     <h2>Charts</h2>
@@ -584,18 +576,22 @@ main{
       <div class="number">01</div>
       <div><h3>HOT 50</h3><p class="muted">Ranking geral</p></div>
     </div>
+
     <div class="listItem">
       <div class="number">02</div>
       <div><h3>TOP ÁLBUNS</h3><p class="muted">Projetos em destaque</p></div>
     </div>
+
     <div class="listItem">
       <div class="number">03</div>
       <div><h3>EM ASCENSÃO</h3><p class="muted">Artistas crescendo rapidamente</p></div>
     </div>
+
     <div class="listItem">
       <div class="number">04</div>
       <div><h3>FAN FAVORITES</h3><p class="muted">Favoritos da comunidade</p></div>
     </div>
+
     <div class="listItem">
       <div class="number">05</div>
       <div><h3>VISUAL CHART</h3><p class="muted">Projetos visuais</p></div>
@@ -603,7 +599,6 @@ main{
   </div>
 </section>
 
-<!-- NOTÍCIAS -->
 <section id="news" class="page">
   <div class="sectionHead">
     <h2>Central de Notícias</h2>
@@ -619,7 +614,6 @@ main{
   </div>
 </section>
 
-<!-- AGORA -->
 <section id="now" class="page">
   <div class="hero">
     <small>AO VIVO / AGORA</small>
@@ -639,12 +633,12 @@ main{
   </div>
 </section>
 
-<!-- PERFIL -->
 <section id="profile" class="page">
   <div class="profile">
     <div class="profileBox">
       <div class="avatar"></div>
       <h1>Seu perfil</h1>
+
       <p class="muted" style="margin-top:8px">
         Entre na NERVA para acompanhar artistas,
         fandoms e seus interesses.
@@ -656,11 +650,11 @@ main{
   </div>
 </section>
 
-<!-- BUSCA -->
 <section id="results" class="page">
   <div class="sectionHead">
     <h2>Resultados</h2>
   </div>
+
   <div id="resultBox" class="empty">
     <h2>Pesquise na NERVA</h2>
     <p>Digite um artista, álbum, era, gravadora ou fandom.</p>
@@ -708,13 +702,6 @@ function learn(){
   openModal(
     "Sobre a NERVA",
     "A NERVA é uma plataforma criada para organizar e movimentar a cena artística da comunidade Roblox. Ela reúne artistas, álbuns, eras, gravadoras, fandoms, charts, notícias e acontecimentos em um único lugar."
-  );
-}
-
-function loginInfo(){
-  openModal(
-    "Contas NERVA",
-    "O sistema de cadastro e login será conectado ao banco de dados na próxima etapa. Por enquanto, esta versão é a interface navegável da plataforma."
   );
 }
 
@@ -784,5 +771,207 @@ document.getElementById("modal").addEventListener("click",e=>{
 });
 </script>
 
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://vtjibeowavgzgjuzquif.supabase.co";
+
+/*
+  COLE AQUI SOMENTE A SUA PUBLISHABLE KEY DO SUPABASE.
+  NÃO COLOQUE A SECRET KEY.
+*/
+const SUPABASE_KEY = "sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function ensureProfile(){
+  const {
+    data:{user}
+  } = await supabaseClient.auth.getUser();
+
+  if(!user) return;
+
+  const {data:profile} = await supabaseClient
+    .from("profiles")
+    .select("id")
+    .eq("id",user.id)
+    .maybeSingle();
+
+  if(!profile){
+    await supabaseClient
+      .from("profiles")
+      .insert({
+        id:user.id,
+        display_name:user.email
+          ? user.email.split("@")[0]
+          : "Novo usuário"
+      });
+  }
+}
+
+window.loginInfo=function(){
+
+  const box=document.querySelector(".modalBox");
+
+  box.innerHTML=`
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2>Entrar na NERVA</h2>
+
+    <p
+      class="muted"
+      style="margin:15px 0 18px;line-height:1.6"
+    >
+      Entre na sua conta ou crie uma nova.
+    </p>
+
+    <input
+      id="nervaEmail"
+      type="email"
+      placeholder="Seu e-mail"
+      style="
+        width:100%;
+        padding:12px;
+        margin-bottom:10px;
+        border-radius:10px;
+        border:1px solid #384358;
+        background:#18202F;
+        color:#fff;
+        outline:none;
+      "
+    >
+
+    <input
+      id="nervaPassword"
+      type="password"
+      placeholder="Sua senha"
+      style="
+        width:100%;
+        padding:12px;
+        margin-bottom:14px;
+        border-radius:10px;
+        border:1px solid #384358;
+        background:#18202F;
+        color:#fff;
+        outline:none;
+      "
+    >
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+
+      <button class="btn" onclick="nervaLogin()">
+        Entrar
+      </button>
+
+      <button class="btn secondary" onclick="nervaSignup()">
+        Criar conta
+      </button>
+
+    </div>
+
+    <p
+      id="nervaAuthMessage"
+      class="muted"
+      style="margin-top:14px;line-height:1.5"
+    ></p>
+  `;
+
+  document.getElementById("modal").classList.add("show");
+};
+
+async function nervaLogin(){
+
+  const email=
+    document.getElementById("nervaEmail").value.trim();
+
+  const password=
+    document.getElementById("nervaPassword").value;
+
+  const msg=
+    document.getElementById("nervaAuthMessage");
+
+  if(!email || !password){
+    msg.textContent="Preencha o e-mail e a senha.";
+    return;
+  }
+
+  msg.textContent="Entrando...";
+
+  const {data,error}=
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+    msg.textContent=error.message;
+    return;
+  }
+
+  await ensureProfile();
+
+  closeModal();
+  go("profile");
+}
+
+async function nervaSignup(){
+
+  const email=
+    document.getElementById("nervaEmail").value.trim();
+
+  const password=
+    document.getElementById("nervaPassword").value;
+
+  const msg=
+    document.getElementById("nervaAuthMessage");
+
+  if(!email || password.length<6){
+    msg.textContent=
+      "Use um e-mail válido e uma senha com pelo menos 6 caracteres.";
+    return;
+  }
+
+  msg.textContent="Criando sua conta...";
+
+  const {data,error}=
+    await supabaseClient.auth.signUp({
+      email,
+      password
+    });
+
+  if(error){
+    msg.textContent=error.message;
+    return;
+  }
+
+  if(data.session){
+
+    await ensureProfile();
+
+    closeModal();
+    go("profile");
+
+  }else{
+
+    msg.textContent=
+      "Conta criada. Confira seu e-mail para confirmar a conta.";
+
+  }
+}
+
+supabaseClient.auth.getSession().then(
+  async({data})=>{
+    if(data.session){
+      await ensureProfile();
+    }
+  }
+);
+</script>
+
 </body>
-</html>
+  </html>
