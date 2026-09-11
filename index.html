@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NERVA — O lugar onde a cena acontece</title>
+  <title>NERVA</title>
 
   <style>
     * {
@@ -12,194 +12,427 @@
       padding: 0;
     }
 
+    :root {
+      --bg: #18202F;
+      --card: #242F39;
+      --soft: #384358;
+      --coral: #FFA586;
+      --red: #B81A2B;
+      --wine: #401A25;
+      --text: #ffffff;
+      --muted: #9da7b5;
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #18202F;
-      color: #ffffff;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
     }
 
+    /* TOPO */
+
     header {
-      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 68px;
+      padding: 0 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 7%;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(24,32,47,0.96);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      background: rgba(24, 32, 47, 0.97);
+      border-bottom: 1px solid rgba(255,255,255,.07);
     }
 
     .logo {
-      font-size: 25px;
-      font-weight: 800;
+      font-size: 24px;
+      font-weight: 900;
       letter-spacing: 3px;
     }
 
-    nav {
-      display: flex;
-      gap: 28px;
-    }
-
-    nav a {
-      color: #d9dde5;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: #FFA586;
-    }
-
-    .hero {
-      min-height: 620px;
+    .top-actions {
       display: flex;
       align-items: center;
-      padding: 80px 7%;
-      background:
-        radial-gradient(circle at 80% 35%, rgba(184,26,43,0.22), transparent 35%),
-        radial-gradient(circle at 20% 80%, rgba(255,165,134,0.10), transparent 30%);
+      gap: 10px;
     }
 
-    .hero-content {
+    .search {
+      width: 210px;
+      height: 38px;
+      border: 1px solid var(--soft);
+      border-radius: 9px;
+      background: var(--card);
+      color: white;
+      padding: 0 14px;
+      outline: none;
+    }
+
+    .search::placeholder {
+      color: #7f8998;
+    }
+
+    .profile-button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--coral);
+      font-weight: bold;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 58px 6% 45px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(184,26,43,.25), transparent 34%),
+        linear-gradient(135deg, #18202F, #242F39);
+    }
+
+    .hero-label {
+      color: var(--coral);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 9vw, 72px);
+      line-height: .95;
+      letter-spacing: -3px;
       max-width: 720px;
     }
 
-    .tag {
-      display: inline-block;
-      padding: 8px 13px;
-      border: 1px solid rgba(255,165,134,0.35);
-      border-radius: 30px;
-      color: #FFA586;
-      font-size: 12px;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      font-size: clamp(48px, 9vw, 92px);
-      line-height: 0.95;
-      letter-spacing: -4px;
-      margin-bottom: 25px;
-    }
-
-    h1 span {
-      color: #FFA586;
+    .hero h1 span {
+      color: var(--coral);
     }
 
     .hero p {
-      color: #b8c0cc;
-      font-size: 18px;
-      line-height: 1.6;
+      color: var(--muted);
       max-width: 600px;
-      margin-bottom: 35px;
+      margin-top: 20px;
+      line-height: 1.6;
+      font-size: 15px;
     }
 
-    .buttons {
+    /* SEÇÕES */
+
+    main {
+      padding-bottom: 90px;
+    }
+
+    section {
+      padding: 38px 6% 0;
+    }
+
+    .section-title {
       display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 18px;
     }
 
-    .button {
-      display: inline-block;
-      padding: 14px 22px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
+    .section-title h2 {
+      font-size: 23px;
     }
 
-    .primary {
-      background: #B81A2B;
-      color: white;
+    .section-title span {
+      color: var(--coral);
+      font-size: 12px;
     }
 
-    .secondary {
-      border: 1px solid #384358;
-      color: #ffffff;
-      background: #242F39;
+    /* AGORA */
+
+    .now-card {
+      background: linear-gradient(135deg, var(--wine), var(--card));
+      border: 1px solid rgba(255,165,134,.12);
+      border-radius: 15px;
+      padding: 23px;
     }
 
-    .section {
-      padding: 70px 7%;
-      background: #242F39;
-    }
-
-    .section-header {
-      margin-bottom: 35px;
-    }
-
-    .section-header small {
-      color: #FFA586;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #ff8d9b;
       font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
     }
 
-    .section-header h2 {
-      font-size: 32px;
-      margin-top: 8px;
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .card {
-      background: #18202F;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px;
-      padding: 24px;
-      min-height: 160px;
-    }
-
-    .card-number {
-      color: #FFA586;
-      font-size: 13px;
-      margin-bottom: 22px;
-    }
-
-    .card h3 {
-      font-size: 18px;
+    .now-card h3 {
+      font-size: 24px;
       margin-bottom: 9px;
     }
 
-    .card p {
-      color: #9da7b5;
+    .now-card p {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    /* CARDS */
+
+    .horizontal {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .content-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+
+    .cover {
+      height: 150px;
+      background:
+        linear-gradient(145deg, #384358, #401A25);
+      display: flex;
+      align-items: end;
+      padding: 13px;
+    }
+
+    .cover span {
+      background: rgba(24,32,47,.8);
+      padding: 5px 8px;
+      border-radius: 5px;
+      color: var(--coral);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .card-info {
+      padding: 15px;
+    }
+
+    .card-info h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .card-info p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* ARTISTAS */
+
+    .artists {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .artist {
+      min-width: 125px;
+      text-align: center;
+    }
+
+    .artist-photo {
+      width: 105px;
+      height: 105px;
+      margin: auto;
+      border-radius: 50%;
+      background: var(--soft);
+      border: 2px solid rgba(255,165,134,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--coral);
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .artist h3 {
       font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .artist p {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* CHARTS */
+
+    .chart {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .chart-row {
+      display: grid;
+      grid-template-columns: 35px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border-radius: 9px;
+      padding: 12px;
+    }
+
+    .position {
+      color: var(--coral);
+      font-weight: bold;
+    }
+
+    .chart-name {
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .chart-artist {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .growth {
+      color: #ffa586;
+      font-size: 11px;
+    }
+
+    /* NOTÍCIAS */
+
+    .news {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .news-card {
+      padding: 20px;
+      background: var(--card);
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .news-card small {
+      color: var(--coral);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .news-card h3 {
+      font-size: 16px;
+      line-height: 1.3;
+      margin: 12px 0 8px;
+    }
+
+    .news-card p {
+      color: var(--muted);
+      font-size: 12px;
       line-height: 1.5;
     }
 
+    /* NAVEGAÇÃO MOBILE */
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 67px;
+      background: rgba(24,32,47,.98);
+      border-top: 1px solid rgba(255,255,255,.08);
+      display: none;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 200;
+    }
+
+    .bottom-nav a {
+      color: #8792a2;
+      text-decoration: none;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .bottom-nav a.active {
+      color: var(--coral);
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
     footer {
-      padding: 35px 7%;
-      color: #788394;
-      font-size: 12px;
-      background: #18202F;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 30px 6%;
+      color: #687383;
+      font-size: 11px;
+      border-top: 1px solid rgba(255,255,255,.06);
     }
 
-    @media (max-width: 800px) {
-      nav {
-        display: none;
+    /* RESPONSIVO */
+
+    @media (max-width: 900px) {
+      .horizontal {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .cards {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .cards {
+      .news {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      header {
+        padding: 0 18px;
+      }
+
+      .search {
+        width: 130px;
       }
 
       .hero {
-        min-height: 570px;
-        padding-top: 60px;
+        padding: 45px 20px 38px;
+      }
+
+      section {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .horizontal {
+        display: flex;
+        overflow-x: auto;
+      }
+
+      .content-card {
+        min-width: 220px;
+      }
+
+      .bottom-nav {
+        display: flex;
+      }
+
+      main {
+        padding-bottom: 80px;
+      }
+
+      footer {
+        padding-bottom: 90px;
       }
     }
   </style>
@@ -207,163 +440,267 @@
 
 <body>
 
-  <header>
-    <div class="logo">NERVA</div>
+<header>
+  <div class="logo">NERVA</div>
 
-    <nav>
-      <a href="#agora">Agora</a>
-      <a href="#descobrir">Descobrir</a>
-      <a href="#comunidade">Comunidade</a>
-    </nav>
-  </header>
+  <div class="top-actions">
+    <input class="search" type="search" placeholder="Buscar na NERVA">
+    <div class="profile-button">N</div>
+  </div>
+</header>
 
-  <main>
+<main>
 
-    <section class="hero">
-      <div class="hero-content">
+  <!-- HERO -->
 
-        <div class="tag">A NOVA CENA ESTÁ AQUI</div>
+  <div class="hero">
+    <div class="hero-label">O lugar onde a cena acontece</div>
 
-        <h1>
-          O lugar onde<br>
-          a <span>cena</span> acontece.
-        </h1>
+    <h1>
+      Descubra o que está<br>
+      <span>acontecendo.</span>
+    </h1>
 
-        <p>
-          Descubra artistas, lançamentos, eras, gravadoras,
-          fandoms, charts, notícias e os momentos que movimentam
-          a comunidade artística do Roblox.
-        </p>
+    <p>
+      Artistas, lançamentos, eras, gravadoras, fandoms,
+      charts e notícias da comunidade artística do Roblox.
+    </p>
+  </div>
 
-        <div class="buttons">
-          <a class="button primary" href="#descobrir">
-            Explorar a NERVA
-          </a>
+  <!-- AGORA -->
 
-          <a class="button secondary" href="#comunidade">
-            Conhecer a comunidade
-          </a>
-        </div>
+  <section>
 
-      </div>
-    </section>
+    <div class="section-title">
+      <h2>Agora</h2>
+      <span>Ver tudo</span>
+    </div>
 
-    <section class="section" id="agora">
+    <div class="now-card">
 
-      <div class="section-header">
-        <small>O que está acontecendo</small>
-        <h2>Agora na NERVA</h2>
+      <div class="live">
+        <span class="live-dot"></span>
+        Acontecendo agora
       </div>
 
-      <div class="cards">
+      <h3>A cena está se movimentando.</h3>
 
-        <div class="card">
-          <div class="card-number">01</div>
-          <h3>Artistas</h3>
-          <p>
-            Encontre artistas, acompanhe carreiras e descubra
-            novos nomes da cena.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">02</div>
-          <h3>Lançamentos</h3>
-          <p>
-            Álbuns, singles, EPs e novos projetos em destaque.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">03</div>
-          <h3>Eras</h3>
-          <p>
-            Acompanhe conceitos, visuais e momentos marcantes
-            de cada era.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">04</div>
-          <h3>Charts</h3>
-          <p>
-            Veja quem está em alta, quem está crescendo e
-            quais lançamentos estão movimentando a comunidade.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="section" id="descobrir">
-
-      <div class="section-header">
-        <small>Descubra</small>
-        <h2>Uma comunidade feita para a cena.</h2>
-      </div>
-
-      <div class="cards">
-
-        <div class="card">
-          <div class="card-number">05</div>
-          <h3>Gravadoras</h3>
-          <p>
-            Conheça labels, artistas e projetos que estão
-            construindo a nova geração.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">06</div>
-          <h3>Fandoms</h3>
-          <p>
-            Encontre comunidades de fãs e participe dos
-            momentos dos seus artistas favoritos.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">07</div>
-          <h3>Notícias</h3>
-          <p>
-            As principais novidades da comunidade reunidas
-            em um só lugar.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-number">08</div>
-          <h3>Premieres</h3>
-          <p>
-            Viva lançamentos e acontecimentos importantes
-            junto com a comunidade.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="section" id="comunidade">
-
-      <div class="section-header">
-        <small>NERVA</small>
-        <h2>A cena está apenas começando.</h2>
-      </div>
-
-      <p style="color:#9da7b5; max-width:650px; line-height:1.7;">
-        A NERVA está sendo construída para reunir artistas,
-        fãs, gravadoras e toda a comunidade em um espaço
-        próprio, organizado e feito para acompanhar tudo
-        o que acontece na cena.
+      <p>
+        Em breve, este espaço mostrará premieres,
+        lançamentos, anúncios e os principais acontecimentos
+        da comunidade em tempo real.
       </p>
 
-    </section>
+    </div>
 
-  </main>
+  </section>
 
-  <footer>
-    NERVA © 2026 — O lugar onde a cena acontece.
-  </footer>
+  <!-- EM ALTA -->
+
+  <section>
+
+    <div class="section-title">
+      <h2>Em alta</h2>
+      <span>Explorar</span>
+    </div>
+
+    <div class="horizontal">
+
+      <div class="content-card">
+        <div class="cover"><span>Artista</span></div>
+        <div class="card-info">
+          <h3>Primeiros artistas</h3>
+          <p>Conheça quem está chegando à NERVA.</p>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="cover"><span>Release</span></div>
+        <div class="card-info">
+          <h3>Novos lançamentos</h3>
+          <p>Descubra os projetos mais recentes.</p>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="cover"><span>Era</span></div>
+        <div class="card-info">
+          <h3>Novas eras</h3>
+          <p>Conceitos e universos em destaque.</p>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="cover"><span>Visual</span></div>
+        <div class="card-info">
+          <h3>Visual Drops</h3>
+          <p>Os visuais que estão chamando atenção.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ARTISTAS -->
+
+  <section>
+
+    <div class="section-title">
+      <h2>Artistas em ascensão</h2>
+      <span>Ver artistas</span>
+    </div>
+
+    <div class="artists">
+
+      <div class="artist">
+        <div class="artist-photo">01</div>
+        <h3>Artista</h3>
+        <p>Em ascensão</p>
+      </div>
+
+      <div class="artist">
+        <div class="artist-photo">02</div>
+        <h3>Artista</h3>
+        <p>Em ascensão</p>
+      </div>
+
+      <div class="artist">
+        <div class="artist-photo">03</div>
+        <h3>Artista</h3>
+        <p>Em ascensão</p>
+      </div>
+
+      <div class="artist">
+        <div class="artist-photo">04</div>
+        <h3>Artista</h3>
+        <p>Em ascensão</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CHARTS -->
+
+  <section>
+
+    <div class="section-title">
+      <h2>Charts</h2>
+      <span>Ver charts</span>
+    </div>
+
+    <div class="chart">
+
+      <div class="chart-row">
+        <div class="position">01</div>
+        <div>
+          <div class="chart-name">Primeiro lançamento</div>
+          <div class="chart-artist">Artista da comunidade</div>
+        </div>
+        <div class="growth">↑</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="position">02</div>
+        <div>
+          <div class="chart-name">Novo projeto</div>
+          <div class="chart-artist">Artista da comunidade</div>
+        </div>
+        <div class="growth">↑</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="position">03</div>
+        <div>
+          <div class="chart-name">Era em destaque</div>
+          <div class="chart-artist">Artista da comunidade</div>
+        </div>
+        <div class="growth">↑</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- NOTÍCIAS -->
+
+  <section>
+
+    <div class="section-title">
+      <h2>Últimas notícias</h2>
+      <span>Ver notícias</span>
+    </div>
+
+    <div class="news">
+
+      <div class="news-card">
+        <small>NERVA</small>
+        <h3>A NERVA está começando.</h3>
+        <p>
+          Estamos preparando o espaço para receber os primeiros
+          artistas e comunidades.
+        </p>
+      </div>
+
+      <div class="news-card">
+        <small>Comunidade</small>
+        <h3>Novos artistas em breve.</h3>
+        <p>
+          Os primeiros perfis da comunidade serão apresentados
+          durante o lançamento.
+        </p>
+      </div>
+
+      <div class="news-card">
+        <small>Em breve</small>
+        <h3>Uma nova forma de acompanhar a cena.</h3>
+        <p>
+          Charts, eras, fandoms, lançamentos e muito mais
+          chegarão à plataforma.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- NAVEGAÇÃO -->
+
+<nav class="bottom-nav">
+
+  <a href="#" class="active">
+    <span class="nav-icon">⌂</span>
+    Início
+  </a>
+
+  <a href="#">
+    <span class="nav-icon">⌕</span>
+    Descobrir
+  </a>
+
+  <a href="#">
+    <span class="nav-icon">●</span>
+    Agora
+  </a>
+
+  <a href="#">
+    <span class="nav-icon">↗</span>
+    Charts
+  </a>
+
+  <a href="#">
+    <span class="nav-icon">○</span>
+    Perfil
+  </a>
+
+</nav>
+
+<footer>
+  NERVA © 2026 — O lugar onde a cena acontece.
+</footer>
 
 </body>
-      </html>
+</html>
