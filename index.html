@@ -1,831 +1,1838 @@
-<!-- SUPABASE -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NERVA</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+:root{
+  --bg:#18202F;
+  --card:#242F39;
+  --soft:#384358;
+  --peach:#FFA586;
+  --red:#B81A2B;
+  --wine:#401A25;
+  --white:#F7F7F8;
+  --muted:#AEB5C2;
+  --border:rgba(255,255,255,.08);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  min-height:100vh;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* INTRO */
+
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:introOut .8s ease 2s forwards;
+}
+
+.logo{
+  font-size:52px;
+  font-weight:900;
+  letter-spacing:8px;
+  color:var(--peach);
+  animation:logoIn 1s ease forwards;
+}
+
+@keyframes logoIn{
+  from{
+    opacity:0;
+    transform:scale(.8);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+@keyframes introOut{
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+/* AUTH */
+
+#authPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.authBox{
+  width:100%;
+  max-width:430px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:32px;
+  box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.authLogo{
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:5px;
+  color:var(--peach);
+  margin-bottom:8px;
+}
+
+.authTitle{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.authText{
+  color:var(--muted);
+  line-height:1.5;
+  margin-bottom:25px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.field input{
+  width:100%;
+  border:1px solid var(--border);
+  background:#1D2634;
+  color:white;
+  border-radius:12px;
+  padding:14px;
+  outline:none;
+}
+
+.field input:focus{
+  border-color:var(--peach);
+}
+
+.primary{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:var(--peach);
+  color:#18202F;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.secondary{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+  background:transparent;
+  color:white;
+  margin-top:10px;
+}
+
+.authSwitch{
+  text-align:center;
+  color:var(--muted);
+  margin-top:18px;
+  font-size:14px;
+}
+
+.authSwitch button{
+  border:0;
+  background:none;
+  color:var(--peach);
+  font-weight:bold;
+}
+
+.message{
+  margin-bottom:15px;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+  font-size:14px;
+  line-height:1.4;
+}
+
+.error{
+  background:rgba(184,26,43,.18);
+  color:#ffb2bb;
+}
+
+.success{
+  background:rgba(255,165,134,.12);
+  color:var(--peach);
+}
+
+/* APP */
+
+#app{
+  display:none;
+  min-height:100vh;
+}
+
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:240px;
+  background:#151D2A;
+  border-right:1px solid var(--border);
+  padding:25px 16px;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+}
+
+.brand{
+  padding:8px 12px 30px;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:4px;
+  color:var(--peach);
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.nav button{
+  border:0;
+  background:transparent;
+  color:#B8BFCA;
+  text-align:left;
+  padding:13px;
+  border-radius:10px;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:var(--card);
+  color:white;
+}
+
+.main{
+  margin-left:240px;
+  width:calc(100% - 240px);
+}
+
+.topbar{
+  height:70px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  background:rgba(24,32,47,.92);
+  backdrop-filter:blur(15px);
+  z-index:20;
+}
+
+.search{
+  width:300px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:white;
+  padding:11px 14px;
+  border-radius:10px;
+  outline:none;
+}
+
+.userButton{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:white;
+  border-radius:10px;
+  padding:9px 13px;
+}
+
+.content{
+  padding:32px;
+  max-width:1300px;
+  margin:auto;
+}
+
+.hero{
+  background:linear-gradient(135deg,#242F39,#401A25);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:38px;
+  margin-bottom:28px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#C1C7D1;
+  max-width:650px;
+  line-height:1.6;
+}
+
+.section{
+  margin-bottom:35px;
+}
+
+.sectionHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.sectionHead h2{
+  font-size:22px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.empty{
+  text-align:center;
+  padding:45px 20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+
+.empty h3{
+  margin-bottom:8px;
+}
+
+.empty p{
+  color:var(--muted);
+  max-width:500px;
+  margin:auto;
+  line-height:1.5;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* MOBILE */
+
+.mobileNav{
+  display:none;
+}
+
+@media(max-width:800px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding-bottom:75px;
+  }
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .search{
+    width:180px;
+  }
+
+  .content{
+    padding:20px 15px;
+  }
+
+  .hero{
+    padding:25px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .mobileNav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:65px;
+    background:#151D2A;
+    border-top:1px solid var(--border);
+    z-index:50;
+  }
+
+  .mobileNav button{
+    flex:1;
+    border:0;
+    background:none;
+    color:#AEB5C2;
+  }
+
+  .mobileNav button.active{
+    color:var(--peach);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+  <div class="logo">NERVA</div>
+</div>
+
+<!-- LOGIN -->
+
+<section id="authPage">
+
+  <div class="authBox">
+
+    <div class="authLogo">NERVA</div>
+
+    <h1 class="authTitle" id="authTitle">
+      Entre na NERVA
+    </h1>
+
+    <p class="authText" id="authDescription">
+      A casa da nova geração de artistas da comunidade Roblox.
+    </p>
+
+    <div id="errorMessage" class="message error"></div>
+    <div id="successMessage" class="message success"></div>
+
+    <form id="authForm">
+
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          required
+          placeholder="seu@email.com"
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">Senha</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+          minlength="6"
+          placeholder="Mínimo de 6 caracteres"
+        >
+      </div>
+
+      <button
+        class="primary"
+        id="authSubmit"
+        type="submit"
+      >
+        Entrar
+      </button>
+
+    </form>
+
+    <div class="authSwitch">
+
+      <span id="switchText">
+        Ainda não tem uma conta?
+      </span>
+
+      <button
+        type="button"
+        id="switchButton"
+      >
+        Criar conta
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+
+<div id="app">
+
+  <div class="layout">
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        NERVA
+      </div>
+
+      <nav class="nav">
+
+        <button onclick="navigate('home')" data-page="home">
+          Início
+        </button>
+
+        <button onclick="navigate('discover')" data-page="discover">
+          Descobrir
+        </button>
+
+        <button onclick="navigate('now')" data-page="now">
+          Agora
+        </button>
+
+        <button onclick="navigate('charts')" data-page="charts">
+          Charts
+        </button>
+
+        <button onclick="navigate('artists')" data-page="artists">
+          Artistas
+        </button>
+
+        <button onclick="navigate('albums')" data-page="albums">
+          Álbuns
+        </button>
+
+        <button onclick="navigate('eras')" data-page="eras">
+          Eras
+        </button>
+
+        <button onclick="navigate('labels')" data-page="labels">
+          Gravadoras
+        </button>
+
+        <button onclick="navigate('fandoms')" data-page="fandoms">
+          Fandoms
+        </button>
+
+        <button onclick="navigate('news')" data-page="news">
+          Notícias
+        </button>
+
+        <button onclick="navigate('profile')" data-page="profile">
+          Meu perfil
+        </button>
+
+      </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <input
+          class="search"
+          id="searchInput"
+          placeholder="Pesquisar na NERVA..."
+        >
+
+        <button
+          class="userButton"
+          onclick="navigate('profile')"
+          id="topUser"
+        >
+          Perfil
+        </button>
+
+      </header>
+
+
+      <div class="content">
+
+
+        <!-- HOME -->
+
+        <section class="page active" id="page-home">
+
+          <div class="hero">
+
+            <h1>O lugar onde a cena acontece.</h1>
+
+            <p>
+              Descubra artistas, eras, lançamentos, gravadoras,
+              fandoms, notícias e tudo que movimenta a comunidade.
+            </p>
+
+          </div>
+
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Agora</h2>
+            </div>
+
+            <div class="cards">
+
+              <div class="card">
+                <h3>Em destaque</h3>
+                <p>
+                  Os acontecimentos mais importantes da comunidade.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>Novos lançamentos</h3>
+                <p>
+                  Descubra os próximos projetos e lançamentos.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>Em ascensão</h3>
+                <p>
+                  Artistas que estão crescendo rapidamente.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Bem-vindo à NERVA</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>A NERVA está começando.</h3>
+
+              <p>
+                Os primeiros artistas e projetos estão chegando.
+                Em breve, este espaço estará cheio de novidades
+                da comunidade.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- DISCOVER -->
+
+        <section class="page" id="page-discover">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Descobrir</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>Descubra novos artistas</h3>
+
+              <p>
+                Encontre artistas, projetos, eras e sons
+                que combinam com seus interesses.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- NOW -->
+
+        <section class="page" id="page-now">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Agora</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>O que está acontecendo?</h3>
+
+              <p>
+                Aqui aparecerão premieres, lançamentos,
+                anúncios, eventos e acontecimentos em tempo real.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- CHARTS -->
+
+        <section class="page" id="page-charts">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Charts</h2>
+            </div>
+
+            <div class="cards">
+
+              <div class="card">
+                <h3>HOT 50</h3>
+                <p>Os maiores destaques da comunidade.</p>
+              </div>
+
+              <div class="card">
+                <h3>Top Álbuns</h3>
+                <p>Álbuns com maior impacto.</p>
+              </div>
+
+              <div class="card">
+                <h3>Em Ascensão</h3>
+                <p>Artistas com maior crescimento.</p>
+              </div>
+
+              <div class="card">
+                <h3>Fan Favorites</h3>
+                <p>Os favoritos da comunidade.</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ARTISTS -->
+
+        <section class="page" id="page-artists">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Artistas</h2>
+            </div>
+
+            <div id="artistsList" class="cards">
+
+              <div class="empty">
+                <h3>Nenhum artista ainda</h3>
+                <p>
+                  Os primeiros artistas da NERVA aparecerão aqui.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ALBUMS -->
+
+        <section class="page" id="page-albums">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Álbuns</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>Nenhum lançamento ainda</h3>
+
+              <p>
+                Quando os artistas começarem a publicar seus
+                projetos, eles aparecerão aqui.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ERAS -->
+
+        <section class="page" id="page-eras">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Eras</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>As eras dos artistas</h3>
+
+              <p>
+                Conceitos, estéticas, álbuns, singles e momentos
+                que formam cada fase de uma carreira.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- LABELS -->
+
+        <section class="page" id="page-labels">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Gravadoras</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>Gravadoras da comunidade</h3>
+
+              <p>
+                Conheça labels, artistas e projetos associados.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- FANDOMS -->
+
+        <section class="page" id="page-fandoms">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Fandoms</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>Comunidades de fãs</h3>
+
+              <p>
+                Encontre fãs de seus artistas favoritos.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- NEWS -->
+
+        <section class="page" id="page-news">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Notícias</h2>
+            </div>
+
+            <div class="empty">
+
+              <h3>Central de notícias</h3>
+
+              <p>
+                Novos lançamentos, eras, contratações,
+                eventos e acontecimentos importantes.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section class="page" id="page-profile">
+
+          <div class="section">
+
+            <div class="sectionHead">
+              <h2>Meu perfil</h2>
+            </div>
+
+            <div class="card">
+
+              <h3 id="profileName">
+                Carregando...
+              </h3>
+
+              <p id="profileEmail">
+                Carregando...
+              </p>
+
+              <br>
+
+              <button
+                class="secondary"
+                onclick="logout()"
+              >
+                Sair da conta
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <nav class="mobileNav">
+
+    <button onclick="navigate('home')" data-page="home">
+      Início
+    </button>
+
+    <button onclick="navigate('discover')" data-page="discover">
+      Descobrir
+    </button>
+
+    <button onclick="navigate('charts')" data-page="charts">
+      Charts
+    </button>
+
+    <button onclick="navigate('artists')" data-page="artists">
+      Artistas
+    </button>
+
+    <button onclick="navigate('profile')" data-page="profile">
+      Perfil
+    </button>
+
+  </nav>
+
+</div>
+
+
 <script>
-/* =====================================================
-   NERVA — AUTENTICAÇÃO REAL
-   ===================================================== */
+
+/* =========================================================
+   NERVA — CONFIGURAÇÃO SUPABASE
+   ========================================================= */
 
 const SUPABASE_URL =
-"https://vtjibeowavgzgjuzquif.supabase.co";
+  "https://vtjibeowavgzgjuzquif.supabase.co";
 
-/*
-   IMPORTANTE:
-   COLE AQUI A SUA CHAVE PUBLICÁVEL
-   DO SUPABASE.
-
-   Ela começa com:
-   sb_publishable_
-
-   NÃO coloque a secret key.
-*/
-const SUPABASE_KEY =
-"sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p";
-
-let supabaseClient;
-let currentSession = null;
-let currentUser = null;
+const SUPABASE_PUBLISHABLE_KEY =
+  "COLE_SUA_PUBLISHABLE_KEY_AQUI";
 
 
-/* =====================================================
-   INICIALIZAÇÃO
-   ===================================================== */
+/* =========================================================
+   CLIENTE SUPABASE
+   ========================================================= */
+
+let supabaseClient = null;
 
 function iniciarSupabase(){
 
-    if(
-        !SUPABASE_KEY ||
-        SUPABASE_KEY === "COLE_AQUI_SUA_CHAVE_PUBLICAVEL"
-    ){
+  if(
+    !window.supabase ||
+    !window.supabase.createClient
+  ){
 
-        mostrarErro(
-            "A conexão com o banco ainda não foi configurada."
-        );
+    mostrarErro(
+      "Não foi possível carregar o sistema de autenticação. Recarregue a página."
+    );
 
-        return false;
-    }
+    return false;
+  }
 
-    if(
-        !window.supabase ||
-        !window.supabase.createClient
-    ){
+  if(
+    !SUPABASE_PUBLISHABLE_KEY ||
+    SUPABASE_PUBLISHABLE_KEY ===
+    "sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p"
+  ){
 
-        mostrarErro(
-            "Não foi possível carregar o sistema de banco."
-        );
+    mostrarErro(
+      "A Publishable Key do Supabase ainda não foi configurada no código."
+    );
 
-        return false;
-    }
+    return false;
+  }
 
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY,
-            {
-                auth:{
-                    persistSession:true,
-                    autoRefreshToken:true,
-                    detectSessionInUrl:true
-                }
-            }
-        );
+  supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth:{
+          persistSession:true,
+          autoRefreshToken:true,
+          detectSessionInUrl:true
+        }
+      }
+    );
 
-    return true;
+  return true;
 }
 
 
-/* =====================================================
+/* =========================================================
    MENSAGENS
-   ===================================================== */
+   ========================================================= */
 
-function mostrarErro(mensagem){
+function mostrarErro(texto){
 
-    const elemento =
-        document.getElementById("authNotice");
+  const box =
+    document.getElementById("errorMessage");
 
-    if(!elemento) return;
+  const success =
+    document.getElementById("successMessage");
 
-    elemento.innerHTML = `
-        <div style="
-            padding:13px;
-            margin-bottom:15px;
-            border-radius:12px;
-            background:#401A25;
-            border:1px solid #B81A2B;
-            color:#fff;
-            line-height:1.45;
-        ">
-            ${escapar(mensagem)}
-        </div>
-    `;
+  if(!box) return;
+
+  if(success){
+    success.style.display="none";
+  }
+
+  box.textContent = texto;
+  box.style.display="block";
 }
 
 
-function mostrarSucesso(mensagem){
+function mostrarSucesso(texto){
 
-    const elemento =
-        document.getElementById("authNotice");
+  const box =
+    document.getElementById("successMessage");
 
-    if(!elemento) return;
+  const error =
+    document.getElementById("errorMessage");
 
-    elemento.innerHTML = `
-        <div style="
-            padding:13px;
-            margin-bottom:15px;
-            border-radius:12px;
-            background:#242F39;
-            border:1px solid #FFA586;
-            color:#FFA586;
-            line-height:1.45;
-        ">
-            ${escapar(mensagem)}
-        </div>
-    `;
+  if(!box) return;
+
+  if(error){
+    error.style.display="none";
+  }
+
+  box.textContent = texto;
+  box.style.display="block";
 }
 
 
-function escapar(texto){
+function limparMensagens(){
 
-    return String(texto ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+  const error =
+    document.getElementById("errorMessage");
+
+  const success =
+    document.getElementById("successMessage");
+
+  if(error){
+    error.style.display="none";
+  }
+
+  if(success){
+    success.style.display="none";
+  }
 }
 
 
-/* =====================================================
+/* =========================================================
+   MODO LOGIN / CADASTRO
+   ========================================================= */
+
+let authMode = "login";
+
+
+function mudarModoAuth(){
+
+  limparMensagens();
+
+  if(authMode === "login"){
+
+    authMode = "signup";
+
+    document.getElementById("authTitle").textContent =
+      "Criar sua conta";
+
+    document.getElementById("authDescription").textContent =
+      "Entre para fazer parte da NERVA.";
+
+    document.getElementById("authSubmit").textContent =
+      "Criar conta";
+
+    document.getElementById("switchText").textContent =
+      "Já tem uma conta?";
+
+    document.getElementById("switchButton").textContent =
+      "Entrar";
+
+  }else{
+
+    authMode = "login";
+
+    document.getElementById("authTitle").textContent =
+      "Entre na NERVA";
+
+    document.getElementById("authDescription").textContent =
+      "A casa da nova geração de artistas da comunidade Roblox.";
+
+    document.getElementById("authSubmit").textContent =
+      "Entrar";
+
+    document.getElementById("switchText").textContent =
+      "Ainda não tem uma conta?";
+
+    document.getElementById("switchButton").textContent =
+      "Criar conta";
+  }
+}
+
+
+/* =========================================================
    CADASTRO
-   ===================================================== */
+   ========================================================= */
 
-async function criarConta(){
+async function criarConta(email,password){
 
-    const nome =
-        document
-        .getElementById("name")
-        ?.value
-        ?.trim();
+  const {data,error} =
+    await supabaseClient.auth.signUp({
 
-    const email =
-        document
-        .getElementById("email")
-        ?.value
-        ?.trim();
+      email:email.trim(),
 
-    const senha =
-        document
-        .getElementById("password")
-        ?.value;
+      password:password,
 
-    const botao =
-        document.getElementById("authButton");
+      options:{
+        data:{
+          display_name:
+            email.split("@")[0]
+        }
+      }
 
+    });
 
-    if(!nome){
+  if(error){
+    throw error;
+  }
 
-        mostrarErro(
-            "Digite seu nome."
-        );
-
-        return;
-    }
+  return data;
+}
 
 
-    if(!email){
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
-        mostrarErro(
-            "Digite seu e-mail."
-        );
+async function entrarConta(email,password){
 
-        return;
-    }
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+      email:email.trim(),
+
+      password:password
+
+    });
+
+  if(error){
+    throw error;
+  }
+
+  return data;
+}
 
 
-    if(!email.includes("@")){
+/* =========================================================
+   FORMULÁRIO
+   ========================================================= */
 
-        mostrarErro(
-            "Digite um e-mail válido."
-        );
+document
+  .getElementById("authForm")
+  .addEventListener("submit", async function(event){
 
-        return;
-    }
+    event.preventDefault();
 
-
-    if(!senha || senha.length < 6){
-
-        mostrarErro(
-            "A senha precisa ter pelo menos 6 caracteres."
-        );
-
-        return;
-    }
-
+    limparMensagens();
 
     if(!supabaseClient){
 
-        mostrarErro(
-            "O banco ainda não foi inicializado."
-        );
+      mostrarErro(
+        "O Supabase ainda não foi conectado. Confira a Publishable Key."
+      );
 
-        return;
+      return;
+    }
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+    const password =
+      document
+        .getElementById("password")
+        .value;
+
+    if(!email){
+
+      mostrarErro("Digite seu e-mail.");
+
+      return;
+    }
+
+    if(password.length < 6){
+
+      mostrarErro(
+        "A senha precisa ter pelo menos 6 caracteres."
+      );
+
+      return;
     }
 
 
-    if(botao){
+    const button =
+      document.getElementById("authSubmit");
 
-        botao.disabled = true;
-        botao.textContent = "Criando conta...";
-    }
+    button.disabled = true;
+
+    button.textContent =
+      authMode === "login"
+        ? "Entrando..."
+        : "Criando conta...";
 
 
     try{
 
-        const resultado =
-            await supabaseClient.auth.signUp({
+      if(authMode === "signup"){
 
-                email:email,
-
-                password:senha,
-
-                options:{
-                    data:{
-                        display_name:nome
-                    }
-                }
-
-            });
+        const data =
+          await criarConta(
+            email,
+            password
+          );
 
 
-        if(resultado.error){
+        if(data.session){
 
-            throw resultado.error;
-        }
+          mostrarSucesso(
+            "Conta criada. Entrando..."
+          );
 
-
-        /*
-           Se o Supabase estiver configurado
-           para exigir confirmação de e-mail,
-           a sessão poderá vir vazia.
-        */
-
-        if(!resultado.data.session){
-
-            mostrarSucesso(
-                "Conta criada! Confira seu e-mail para confirmar a conta e depois entre na NERVA."
-            );
+          await abrirAplicativo(
+            data.user
+          );
 
         }else{
 
-            currentSession =
-                resultado.data.session;
+          mostrarSucesso(
+            "Conta criada. Verifique seu e-mail para confirmar a conta e depois entre na NERVA."
+          );
 
-            currentUser =
-                resultado.data.user;
+          authMode = "login";
 
-            await prepararPerfil();
-
-            entrarNoAplicativo();
+          mudarModoAuth();
         }
 
+      }else{
 
-    }catch(erro){
+        const data =
+          await entrarConta(
+            email,
+            password
+          );
 
-        console.error(
-            "Erro ao criar conta:",
-            erro
-        );
+        if(data.user){
 
+          mostrarSucesso(
+            "Login realizado."
+          );
 
-        let mensagem =
-            erro?.message ||
-            "Não foi possível criar sua conta.";
-
-
-        if(
-            mensagem
-            .toLowerCase()
-            .includes("already registered")
-        ){
-
-            mensagem =
-                "Esse e-mail já possui uma conta. Entre na NERVA.";
-
+          await abrirAplicativo(
+            data.user
+          );
         }
+      }
 
+    }catch(error){
 
-        mostrarErro(mensagem);
+      console.error(
+        "NERVA AUTH ERROR:",
+        error
+      );
 
+      mostrarErro(
+        traduzirErro(error)
+      );
 
     }finally{
 
-        if(botao){
+      button.disabled = false;
 
-            botao.disabled = false;
-
-            botao.textContent =
-                "Criar conta";
-
-        }
-
+      button.textContent =
+        authMode === "login"
+          ? "Entrar"
+          : "Criar conta";
     }
+
+  });
+
+
+/* =========================================================
+   TRADUÇÃO DE ERROS
+   ========================================================= */
+
+function traduzirErro(error){
+
+  const message =
+    String(
+      error?.message ||
+      "Ocorreu um erro."
+    );
+
+  const lower =
+    message.toLowerCase();
+
+  if(
+    lower.includes("invalid login credentials")
+  ){
+    return "E-mail ou senha incorretos.";
+  }
+
+  if(
+    lower.includes("email not confirmed")
+  ){
+    return "Seu e-mail ainda não foi confirmado.";
+  }
+
+  if(
+    lower.includes("user already registered")
+  ){
+    return "Esse e-mail já possui uma conta. Tente entrar.";
+  }
+
+  if(
+    lower.includes("password should be at least")
+  ){
+    return "A senha precisa ter pelo menos 6 caracteres.";
+  }
+
+  if(
+    lower.includes("rate limit")
+  ){
+    return "Muitas tentativas. Aguarde um pouco e tente novamente.";
+  }
+
+  if(
+    lower.includes("failed to fetch")
+  ){
+    return "Não foi possível conectar ao Supabase. Confira sua conexão.";
+  }
+
+  return message;
 }
 
 
-/* =====================================================
-   LOGIN
-   ===================================================== */
+/* =========================================================
+   PERFIL
+   ========================================================= */
 
-async function entrarConta(){
+async function salvarPerfil(user){
 
-    const email =
-        document
-        .getElementById("email")
-        ?.value
-        ?.trim();
+  if(!user || !supabaseClient){
+    return;
+  }
 
-    const senha =
-        document
-        .getElementById("password")
-        ?.value;
+  const nome =
+    user.user_metadata?.display_name ||
+    user.email?.split("@")[0] ||
+    "Usuário";
 
-    const botao =
-        document.getElementById("authButton");
+  const usernameBase =
+    nome
+      .toLowerCase()
+      .replace(/[^a-z0-9_]/g,"")
+      .slice(0,20) ||
+    "usuario";
 
 
-    if(!email){
+  const {data:existente} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,username")
+      .eq("id",user.id)
+      .maybeSingle();
 
-        mostrarErro(
-            "Digite seu e-mail."
-        );
 
-        return;
-    }
+  if(existente){
+    return;
+  }
 
 
-    if(!senha){
+  let username =
+    usernameBase;
 
-        mostrarErro(
-            "Digite sua senha."
-        );
 
-        return;
-    }
+  const {error} =
+    await supabaseClient
+      .from("profiles")
+      .insert({
 
+        id:user.id,
 
-    if(!supabaseClient){
+        username:username,
 
-        mostrarErro(
-            "O banco ainda não foi inicializado."
-        );
+        display_name:nome,
 
-        return;
-    }
+        bio:"",
 
+        avatar_url:"",
 
-    if(botao){
+        is_artist:false,
 
-        botao.disabled = true;
-        botao.textContent = "Entrando...";
-    }
+        is_verified:false
 
+      });
 
-    try{
 
-        const resultado =
-            await supabaseClient.auth
-            .signInWithPassword({
+  if(error){
 
-                email:email,
+    console.warn(
+      "Não foi possível criar o perfil:",
+      error
+    );
 
-                password:senha
-
-            });
-
-
-        if(resultado.error){
-
-            throw resultado.error;
-        }
-
-
-        currentSession =
-            resultado.data.session;
-
-        currentUser =
-            resultado.data.user;
-
-
-        await prepararPerfil();
-
-        entrarNoAplicativo();
-
-
-    }catch(erro){
-
-        console.error(
-            "Erro no login:",
-            erro
-        );
-
-
-        let mensagem =
-            erro?.message ||
-            "Não foi possível entrar.";
-
-
-        if(
-            mensagem
-            .toLowerCase()
-            .includes("invalid login credentials")
-        ){
-
-            mensagem =
-                "E-mail ou senha incorretos.";
-
-        }
-
-
-        mostrarErro(mensagem);
-
-
-    }finally{
-
-        if(botao){
-
-            botao.disabled = false;
-
-            botao.textContent =
-                "Entrar";
-
-        }
-
-    }
-}
-
-
-/* =====================================================
-   BOTÃO PRINCIPAL
-   ===================================================== */
-
-async function enviarAutenticacao(){
-
-    const modo =
-        window.authMode || "login";
-
-
-    if(modo === "signup"){
-
-        await criarConta();
-
-    }else{
-
-        await entrarConta();
-
-    }
-}
-
-
-/* =====================================================
-   MODO ENTRAR / CRIAR CONTA
-   ===================================================== */
-
-function mudarModoAuth(modo){
-
-    window.authMode = modo;
-
-
-    const login =
-        document.getElementById("tabLogin");
-
-    const cadastro =
-        document.getElementById("tabSignup");
-
-    const nome =
-        document.getElementById("nameField");
-
-    const botao =
-        document.getElementById("authButton");
-
-
-    if(modo === "signup"){
-
-        login?.classList.remove("active");
-        cadastro?.classList.add("active");
-
-        nome?.classList.remove("hidden");
-
-        if(botao){
-
-            botao.textContent =
-                "Criar conta";
-
-        }
-
-    }else{
-
-        login?.classList.add("active");
-        cadastro?.classList.remove("active");
-
-        nome?.classList.add("hidden");
-
-        if(botao){
-
-            botao.textContent =
-                "Entrar";
-
-        }
-
-    }
-
-
-    const aviso =
-        document.getElementById("authNotice");
-
-    if(aviso){
-
-        aviso.innerHTML = "";
-
-    }
-}
-
-
-/* Compatibilidade com os botões
-   do código anterior */
-
-function setAuthMode(modo){
-
-    mudarModoAuth(modo);
+  }
 
 }
 
 
-/* =====================================================
-   PERFIL NO BANCO
-   ===================================================== */
+/* =========================================================
+   ABRIR APLICATIVO
+   ========================================================= */
 
-async function prepararPerfil(){
+async function abrirAplicativo(user){
 
-    if(!currentUser) return;
+  await salvarPerfil(user);
 
+  document
+    .getElementById("authPage")
+    .style.display="none";
 
-    try{
-
-        const existente =
-            await supabaseClient
-            .from("profiles")
-            .select("*")
-            .eq("id",currentUser.id)
-            .maybeSingle();
+  document
+    .getElementById("app")
+    .style.display="block";
 
 
-        if(existente.error){
-
-            console.error(
-                "Erro buscando perfil:",
-                existente.error
-            );
-
-            return;
-        }
+  document
+    .getElementById("profileEmail")
+    .textContent =
+      user.email || "";
 
 
-        if(!existente.data){
-
-            const nome =
-                currentUser
-                .user_metadata
-                ?.display_name
-                ||
-                currentUser.email
-                ?.split("@")[0]
-                ||
-                "Usuário NERVA";
+  const nome =
+    user.user_metadata?.display_name ||
+    user.email?.split("@")[0] ||
+    "Usuário";
 
 
-            const username =
-                gerarUsername(nome);
+  document
+    .getElementById("profileName")
+    .textContent =
+      nome;
 
 
-            const novoPerfil =
-                await supabaseClient
-                .from("profiles")
-                .insert({
-
-                    id:currentUser.id,
-
-                    username:username,
-
-                    display_name:nome,
-
-                    bio:"",
-
-                    is_artist:false,
-
-                    is_verified:false
-
-                });
+  document
+    .getElementById("topUser")
+    .textContent =
+      nome;
 
 
-            if(novoPerfil.error){
+  navigate("home");
 
-                console.error(
-                    "Erro criando perfil:",
-                    novoPerfil.error
-                );
-
-            }
-
-        }
-
-    }catch(erro){
-
-        console.error(
-            "Erro preparando perfil:",
-            erro
-        );
-
-    }
-}
-
-
-/* =====================================================
-   USERNAME
-   ===================================================== */
-
-function gerarUsername(nome){
-
-    let resultado =
-        String(nome)
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .replace(
-            /[^a-z0-9]/g,
-            ""
-        )
-        .slice(0,20);
-
-
-    if(!resultado){
-
-        resultado = "nervauser";
-
-    }
-
-
-    return resultado;
-}
-
-
-/* =====================================================
-   ENTRAR NO APLICATIVO
-   ===================================================== */
-
-function entrarNoAplicativo(){
-
-    const auth =
-        document.getElementById("auth");
-
-    const app =
-        document.getElementById("app");
-
-
-    auth?.classList.add("hidden");
-
-    app?.classList.remove("hidden");
-
-
-    /*
-       Se o seu código já possuir
-       a função go(), usamos ela.
-    */
-
-    if(typeof go === "function"){
-
-        go("home");
-
-    }
+  carregarArtistas();
 
 }
 
 
-/* =====================================================
-   LOGOUT
-   ===================================================== */
-
-async function sairDaConta(){
-
-    if(!supabaseClient) return;
-
-    await supabaseClient.auth.signOut();
-
-    currentSession = null;
-    currentUser = null;
-
-    document
-        .getElementById("app")
-        ?.classList
-        .add("hidden");
-
-    document
-        .getElementById("auth")
-        ?.classList
-        .remove("hidden");
-}
-
-
-/* Compatibilidade */
-
-async function logout(){
-
-    await sairDaConta();
-
-}
-
-
-/* =====================================================
-   RECUPERAR SESSÃO
-   ===================================================== */
+/* =========================================================
+   VERIFICAR SESSÃO
+   ========================================================= */
 
 async function verificarSessao(){
 
-    if(!supabaseClient) return;
+  if(!supabaseClient){
+    return;
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
 
 
-    try{
+  if(error){
 
-        const resultado =
-            await supabaseClient.auth
-            .getSession();
+    console.error(error);
 
-
-        if(resultado.error){
-
-            console.error(
-                resultado.error
-            );
-
-            return;
-        }
+    return;
+  }
 
 
-        currentSession =
-            resultado.data.session;
+  if(data?.session?.user){
 
-
-        if(currentSession){
-
-            currentUser =
-                currentSession.user;
-
-            await prepararPerfil();
-
-            entrarNoAplicativo();
-
-        }
-
-    }catch(erro){
-
-        console.error(
-            "Erro verificando sessão:",
-            erro
-        );
-
-    }
-
-
-    supabaseClient.auth
-    .onAuthStateChange(
-        async(event,sessao)=>{
-
-            currentSession =
-                sessao;
-
-            currentUser =
-                sessao?.user || null;
-
-        }
+    await abrirAplicativo(
+      data.session.user
     );
+
+  }
+
 }
 
 
-/* =====================================================
-   INICIAR
-   ===================================================== */
+/* =========================================================
+   LOGOUT
+   ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async()=>{
+async function logout(){
 
-        const conectado =
-            iniciarSupabase();
+  if(!supabaseClient){
+    return;
+  }
 
-        if(!conectado) return;
+  await supabaseClient.auth.signOut();
 
-        /*
-           O botão antigo do HTML agora
-           chama nossa função correta.
-        */
+  document
+    .getElementById("app")
+    .style.display="none";
 
-        const botao =
-            document.getElementById(
-                "authButton"
-            );
+  document
+    .getElementById("authPage")
+    .style.display="flex";
 
-        if(botao){
+  document
+    .getElementById("email")
+    .value="";
 
-            botao.onclick =
-                enviarAutenticacao;
+  document
+    .getElementById("password")
+    .value="";
 
+  limparMensagens();
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
+
+function navigate(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(function(element){
+
+      element.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(
+      "page-" + page
+    );
+
+
+  if(target){
+    target.classList.add("active");
+  }
+
+
+  document
+    .querySelectorAll("[data-page]")
+    .forEach(function(button){
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === page
+      );
+
+    });
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   CARREGAR ARTISTAS
+   ========================================================= */
+
+async function carregarArtistas(){
+
+  const container =
+    document.getElementById("artistsList");
+
+  if(!container || !supabaseClient){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("artists")
+      .select(
+        "id,artist_name,genres,followers_count"
+      )
+      .order(
+        "followers_count",
+        {
+          ascending:false
         }
+      )
+      .limit(20);
 
 
-        await verificarSessao();
+  if(error){
+
+    console.warn(
+      "Erro ao carregar artistas:",
+      error
+    );
+
+    return;
+  }
+
+
+  if(!data || data.length === 0){
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  data.forEach(function(artist){
+
+    const card =
+      document.createElement("div");
+
+    card.className="card";
+
+
+    const genres =
+      Array.isArray(artist.genres)
+        ? artist.genres.join(", ")
+        : "";
+
+
+    card.innerHTML = `
+
+      <h3>${escapar(artist.artist_name)}</h3>
+
+      <p>
+        ${escapar(
+          genres || "Artista NERVA"
+        )}
+      </p>
+
+      <p style="margin-top:8px">
+        ${Number(
+          artist.followers_count || 0
+        )} seguidores
+      </p>
+
+    `;
+
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================================================
+   SEGURANÇA DE TEXTO
+   ========================================================= */
+
+function escapar(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   EVENTOS
+   ========================================================= */
+
+document
+  .getElementById("switchButton")
+  .addEventListener(
+    "click",
+    mudarModoAuth
+  );
+
+
+/* =========================================================
+   SUPABASE AUTH LISTENER
+   ========================================================= */
+
+function iniciarListenerAuth(){
+
+  if(!supabaseClient){
+    return;
+  }
+
+
+  supabaseClient.auth.onAuthStateChange(
+    async function(event,session){
+
+      if(
+        event === "SIGNED_IN" &&
+        session?.user
+      ){
+
+        await abrirAplicativo(
+          session.user
+        );
+
+      }
 
     }
+  );
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function(){
+
+    const conectado =
+      iniciarSupabase();
+
+
+    if(!conectado){
+      return;
+    }
+
+
+    iniciarListenerAuth();
+
+
+    await verificarSessao();
+
+  }
 );
-          </script>
+
+</script>
+
+</body>
+           </html> 
