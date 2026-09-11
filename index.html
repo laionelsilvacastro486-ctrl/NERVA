@@ -6,6 +6,8 @@
 
   <title>NERVA</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -226,7 +228,10 @@
 
 <header>
   <div class="header-content">
-    <div class="logo" onclick="showPage('home')">NERVA</div>
+
+    <div class="logo" onclick="showPage('home')">
+      NERVA
+    </div>
 
     <div class="search">
       <input
@@ -235,6 +240,7 @@
         placeholder="Buscar na NERVA..."
       >
     </div>
+
   </div>
 </header>
 
@@ -245,6 +251,7 @@
 
     <div class="hero">
       <h1>O lugar onde a <span>cena</span> acontece.</h1>
+
       <p>
         Descubra artistas, lançamentos, eras, gravadoras,
         fandoms, charts, notícias e tudo que movimenta a comunidade.
@@ -252,39 +259,59 @@
     </div>
 
     <div class="section">
+
       <div class="section-title">
         <h2>🔴 Agora</h2>
-        <button onclick="showPage('agora')">Ver tudo</button>
+        <button onclick="showPage('agora')">
+          Ver tudo
+        </button>
       </div>
 
       <div class="cards">
+
         <div class="card">
           <h3>Novidades chegando</h3>
+
           <p>
             Os primeiros acontecimentos da NERVA aparecerão aqui.
           </p>
-          <span class="tag">EM BREVE</span>
+
+          <span class="tag">
+            EM BREVE
+          </span>
         </div>
 
         <div class="card">
           <h3>Premieres</h3>
+
           <p>
             Acompanhe lançamentos e momentos importantes da cena.
           </p>
-          <span class="tag">EM BREVE</span>
+
+          <span class="tag">
+            EM BREVE
+          </span>
         </div>
+
       </div>
     </div>
 
+
     <div class="section">
+
       <div class="section-title">
         <h2>🔥 Em alta</h2>
-        <button onclick="showPage('descobrir')">Descobrir</button>
+
+        <button onclick="showPage('descobrir')">
+          Descobrir
+        </button>
       </div>
 
       <div class="cards">
+
         <div class="card">
           <h3>Artistas em ascensão</h3>
+
           <p>
             Novos nomes ganhando espaço na comunidade.
           </p>
@@ -292,6 +319,7 @@
 
         <div class="card">
           <h3>Novos lançamentos</h3>
+
           <p>
             Singles, álbuns e novas eras chegando.
           </p>
@@ -299,26 +327,39 @@
 
         <div class="card">
           <h3>Visual Drops</h3>
+
           <p>
             Confira os novos visuais dos artistas.
           </p>
         </div>
+
       </div>
     </div>
 
+
     <div class="section">
+
       <div class="section-title">
         <h2>📊 Charts</h2>
-        <button onclick="showPage('charts')">Ver charts</button>
+
+        <button onclick="showPage('charts')">
+          Ver charts
+        </button>
       </div>
 
       <div class="empty">
-        <h3>Os charts estão começando.</h3>
+
+        <h3>
+          Os charts estão começando.
+        </h3>
+
         <p>
           Quando a comunidade começar a movimentar a NERVA,
           os rankings aparecerão aqui.
         </p>
+
       </div>
+
     </div>
 
   </section>
@@ -328,18 +369,28 @@
   <section id="descobrir" class="page">
 
     <div class="hero">
-      <h1>Descobrir</h1>
+
+      <h1>
+        Descobrir
+      </h1>
+
       <p>
         Encontre novos artistas, músicas, eras e projetos.
       </p>
+
     </div>
 
     <div class="empty">
-      <h3>A descoberta começa aqui.</h3>
+
+      <h3>
+        A descoberta começa aqui.
+      </h3>
+
       <p>
         Em breve você poderá explorar artistas e conteúdos
         de acordo com seus interesses.
       </p>
+
     </div>
 
   </section>
@@ -349,17 +400,27 @@
   <section id="agora" class="page">
 
     <div class="hero">
-      <h1>Agora</h1>
+
+      <h1>
+        Agora
+      </h1>
+
       <p>
         Tudo que está acontecendo neste momento na comunidade.
       </p>
+
     </div>
 
     <div class="empty">
-      <h3>Nada acontecendo ainda.</h3>
+
+      <h3>
+        Nada acontecendo ainda.
+      </h3>
+
       <p>
         Os primeiros eventos, premieres e anúncios aparecerão aqui.
       </p>
+
     </div>
 
   </section>
@@ -369,32 +430,57 @@
   <section id="charts" class="page">
 
     <div class="hero">
-      <h1>Charts</h1>
+
+      <h1>
+        Charts
+      </h1>
+
       <p>
         Os rankings da comunidade NERVA.
       </p>
+
     </div>
 
     <div class="cards">
 
       <div class="card">
-        <h3>HOT 50</h3>
-        <p>Os artistas em maior destaque.</p>
+        <h3>
+          HOT 50
+        </h3>
+
+        <p>
+          Os artistas em maior destaque.
+        </p>
       </div>
 
       <div class="card">
-        <h3>TOP ÁLBUNS</h3>
-        <p>Os álbuns que mais movimentam a comunidade.</p>
+        <h3>
+          TOP ÁLBUNS
+        </h3>
+
+        <p>
+          Os álbuns que mais movimentam a comunidade.
+        </p>
       </div>
 
       <div class="card">
-        <h3>EM ASCENSÃO</h3>
-        <p>Artistas que estão crescendo rapidamente.</p>
+        <h3>
+          EM ASCENSÃO
+        </h3>
+
+        <p>
+          Artistas que estão crescendo rapidamente.
+        </p>
       </div>
 
       <div class="card">
-        <h3>FAN FAVORITES</h3>
-        <p>Os favoritos do público.</p>
+        <h3>
+          FAN FAVORITES
+        </h3>
+
+        <p>
+          Os favoritos do público.
+        </p>
       </div>
 
     </div>
@@ -406,17 +492,27 @@
   <section id="perfil" class="page">
 
     <div class="hero">
-      <h1>Seu perfil</h1>
+
+      <h1>
+        Seu perfil
+      </h1>
+
       <p>
         Entre na NERVA para criar seu perfil e acompanhar seus artistas.
       </p>
+
     </div>
 
     <div class="empty">
-      <h3>Seu perfil ainda não está configurado.</h3>
+
+      <h3>
+        Seu perfil ainda não está configurado.
+      </h3>
+
       <p>
         Em breve você poderá criar sua identidade dentro da NERVA.
       </p>
+
     </div>
 
   </section>
@@ -426,23 +522,34 @@
 
 <nav class="bottom-nav">
 
-  <button class="active" onclick="showPage('home', this)">
+  <button
+    class="active"
+    onclick="showPage('home', this)"
+  >
     Início
   </button>
 
-  <button onclick="showPage('descobrir', this)">
+  <button
+    onclick="showPage('descobrir', this)"
+  >
     Descobrir
   </button>
 
-  <button onclick="showPage('agora', this)">
+  <button
+    onclick="showPage('agora', this)"
+  >
     Agora
   </button>
 
-  <button onclick="showPage('charts', this)">
+  <button
+    onclick="showPage('charts', this)"
+  >
     Charts
   </button>
 
-  <button onclick="showPage('perfil', this)">
+  <button
+    onclick="showPage('perfil', this)"
+  >
     Perfil
   </button>
 
@@ -491,10 +598,30 @@
           return;
         }
 
-        alert('A busca por "' + search + '" será conectada ao banco da NERVA em breve.');
+        alert(
+          'A busca por "' +
+          search +
+          '" será conectada ao banco da NERVA em breve.'
+        );
+
       }
 
     });
+
+
+  /* CONEXÃO COM O SUPABASE */
+
+  const SUPABASE_URL =
+    "https://vtjibeowavgzgjuzquif.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p";
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
 </script>
 
