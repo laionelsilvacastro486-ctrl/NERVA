@@ -3,10 +3,367 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NERVA</title>
+  <title>NERVA — O lugar onde a cena acontece</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #18202F;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(24,32,47,0.96);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: #d9dde5;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #FFA586;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      padding: 80px 7%;
+      background:
+        radial-gradient(circle at 80% 35%, rgba(184,26,43,0.22), transparent 35%),
+        radial-gradient(circle at 20% 80%, rgba(255,165,134,0.10), transparent 30%);
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 13px;
+      border: 1px solid rgba(255,165,134,0.35);
+      border-radius: 30px;
+      color: #FFA586;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 9vw, 92px);
+      line-height: 0.95;
+      letter-spacing: -4px;
+      margin-bottom: 25px;
+    }
+
+    h1 span {
+      color: #FFA586;
+    }
+
+    .hero p {
+      color: #b8c0cc;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: 35px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .primary {
+      background: #B81A2B;
+      color: white;
+    }
+
+    .secondary {
+      border: 1px solid #384358;
+      color: #ffffff;
+      background: #242F39;
+    }
+
+    .section {
+      padding: 70px 7%;
+      background: #242F39;
+    }
+
+    .section-header {
+      margin-bottom: 35px;
+    }
+
+    .section-header small {
+      color: #FFA586;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+    }
+
+    .section-header h2 {
+      font-size: 32px;
+      margin-top: 8px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: #18202F;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 24px;
+      min-height: 160px;
+    }
+
+    .card-number {
+      color: #FFA586;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 9px;
+    }
+
+    .card p {
+      color: #9da7b5;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    footer {
+      padding: 35px 7%;
+      color: #788394;
+      font-size: 12px;
+      background: #18202F;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        display: none;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 570px;
+        padding-top: 60px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>NERVA</h1>
-  <p>O lugar onde a cena acontece.</p>
+
+  <header>
+    <div class="logo">NERVA</div>
+
+    <nav>
+      <a href="#agora">Agora</a>
+      <a href="#descobrir">Descobrir</a>
+      <a href="#comunidade">Comunidade</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+
+        <div class="tag">A NOVA CENA ESTÁ AQUI</div>
+
+        <h1>
+          O lugar onde<br>
+          a <span>cena</span> acontece.
+        </h1>
+
+        <p>
+          Descubra artistas, lançamentos, eras, gravadoras,
+          fandoms, charts, notícias e os momentos que movimentam
+          a comunidade artística do Roblox.
+        </p>
+
+        <div class="buttons">
+          <a class="button primary" href="#descobrir">
+            Explorar a NERVA
+          </a>
+
+          <a class="button secondary" href="#comunidade">
+            Conhecer a comunidade
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="agora">
+
+      <div class="section-header">
+        <small>O que está acontecendo</small>
+        <h2>Agora na NERVA</h2>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-number">01</div>
+          <h3>Artistas</h3>
+          <p>
+            Encontre artistas, acompanhe carreiras e descubra
+            novos nomes da cena.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">02</div>
+          <h3>Lançamentos</h3>
+          <p>
+            Álbuns, singles, EPs e novos projetos em destaque.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">03</div>
+          <h3>Eras</h3>
+          <p>
+            Acompanhe conceitos, visuais e momentos marcantes
+            de cada era.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">04</div>
+          <h3>Charts</h3>
+          <p>
+            Veja quem está em alta, quem está crescendo e
+            quais lançamentos estão movimentando a comunidade.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="descobrir">
+
+      <div class="section-header">
+        <small>Descubra</small>
+        <h2>Uma comunidade feita para a cena.</h2>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-number">05</div>
+          <h3>Gravadoras</h3>
+          <p>
+            Conheça labels, artistas e projetos que estão
+            construindo a nova geração.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">06</div>
+          <h3>Fandoms</h3>
+          <p>
+            Encontre comunidades de fãs e participe dos
+            momentos dos seus artistas favoritos.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">07</div>
+          <h3>Notícias</h3>
+          <p>
+            As principais novidades da comunidade reunidas
+            em um só lugar.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-number">08</div>
+          <h3>Premieres</h3>
+          <p>
+            Viva lançamentos e acontecimentos importantes
+            junto com a comunidade.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="comunidade">
+
+      <div class="section-header">
+        <small>NERVA</small>
+        <h2>A cena está apenas começando.</h2>
+      </div>
+
+      <p style="color:#9da7b5; max-width:650px; line-height:1.7;">
+        A NERVA está sendo construída para reunir artistas,
+        fãs, gravadoras e toda a comunidade em um espaço
+        próprio, organizado e feito para acompanhar tudo
+        o que acontece na cena.
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer>
+    NERVA © 2026 — O lugar onde a cena acontece.
+  </footer>
+
 </body>
-</html>
+      </html>
