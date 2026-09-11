@@ -1,944 +1,831 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NERVA</title>
-<meta name="theme-color" content="#18202F">
-
-<style>
-:root{
-  --bg:#18202F;
-  --panel:#242F39;
-  --panel2:#384358;
-  --accent:#FFA586;
-  --red:#B81A2B;
-  --wine:#401A25;
-  --text:#F5F7FA;
-  --muted:#AAB3C2;
-  --line:rgba(255,255,255,.09);
-  --radius:18px;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-
-body{
-  overflow-x:hidden;
-}
-
-button,
-input,
-textarea,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-/* =========================
-   TOPO
-========================= */
-
-.top{
-  height:68px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  gap:18px;
-  padding:0 22px;
-  position:sticky;
-  top:0;
-  background:rgba(24,32,47,.94);
-  backdrop-filter:blur(16px);
-  z-index:20;
-}
-
-.logo{
-  font-weight:900;
-  letter-spacing:.12em;
-  font-size:21px;
-}
-
-.search{
-  flex:1;
-  max-width:620px;
-}
-
-.search input,
-.field input,
-.field textarea,
-.field select{
-  width:100%;
-  background:#1d2735;
-  border:1px solid var(--line);
-  color:var(--text);
-  padding:13px 15px;
-  border-radius:12px;
-  outline:none;
-}
-
-.search input:focus,
-.field input:focus,
-.field textarea:focus{
-  border-color:var(--accent);
-}
-
-/* =========================
-   ESTRUTURA
-========================= */
-
-.app{
-  min-height:100vh;
-}
-
-.layout{
-  display:grid;
-  grid-template-columns:230px 1fr;
-  min-height:calc(100vh - 68px);
-}
-
-.side{
-  border-right:1px solid var(--line);
-  padding:20px 14px;
-  position:sticky;
-  top:68px;
-  height:calc(100vh - 68px);
-}
-
-.nav{
-  display:grid;
-  gap:5px;
-}
-
-.nav button,
-.mobile button{
-  background:none;
-  border:0;
-  color:var(--muted);
-  text-align:left;
-  padding:12px 13px;
-  border-radius:10px;
-}
-
-.nav button.active,
-.nav button:hover,
-.mobile button.active{
-  background:rgba(255,165,134,.09);
-  color:var(--text);
-}
-
-.main{
-  padding:28px;
-  max-width:1250px;
-  width:100%;
-  margin:auto;
-}
-
-.view{
-  display:none;
-}
-
-.view.active{
-  display:block;
-}
-
-/* =========================
-   TEXTOS
-========================= */
-
-h1{
-  font-size:34px;
-  margin:0 0 8px;
-}
-
-h2{
-  font-size:22px;
-  margin:0 0 10px;
-}
-
-h3{
-  margin:12px 0 7px;
-}
-
-.sub{
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.hero{
-  background:linear-gradient(
-    135deg,
-    #242F39,
-    #1d2735
-  );
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:30px;
-  margin-bottom:22px;
-}
-
-.hero strong{
-  color:var(--accent);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:
-    repeat(3,minmax(0,1fr));
-  gap:14px;
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-  gap:14px;
-}
-
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:18px;
-}
-
-.card:hover{
-  border-color:rgba(255,165,134,.22);
-}
-
-.row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.between{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.stack{
-  display:grid;
-  gap:14px;
-}
-
-/* =========================
-   BOTÕES
-========================= */
-
-.btn{
-  border:1px solid var(--line);
-  background:#1c2634;
-  color:var(--text);
-  padding:11px 15px;
-  border-radius:11px;
-}
-
-.btn:hover{
-  border-color:rgba(255,165,134,.35);
-}
-
-.btn.primary{
-  background:var(--accent);
-  color:#18202F;
-  border-color:var(--accent);
-  font-weight:800;
-}
-
-.btn.red{
-  background:var(--red);
-  border-color:var(--red);
-}
-
-.btn.ghost{
-  background:transparent;
-}
-
-/* =========================
-   BADGES
-========================= */
-
-.badge{
-  display:inline-flex;
-  padding:5px 9px;
-  border-radius:999px;
-  background:rgba(255,165,134,.1);
-  color:var(--accent);
-  font-size:12px;
-  font-weight:700;
-}
-
-/* =========================
-   AVATAR / CAPAS
-========================= */
-
-.avatar{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:var(--panel2);
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  overflow:hidden;
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.cover{
-  height:150px;
-  border-radius:14px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine),
-      var(--panel2)
-    );
-  margin-bottom:13px;
-  overflow:hidden;
-}
-
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* =========================
-   LISTAS
-========================= */
-
-.list{
-  display:grid;
-  gap:10px;
-}
-
-.item{
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#202b3a;
-}
-
-.stat{
-  font-size:28px;
-  font-weight:900;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:grid;
-  place-items:center;
-  padding:20px;
-  z-index:50;
-}
-
-.modalbox{
-  width:min(560px,100%);
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:22px;
-  max-height:90vh;
-  overflow:auto;
-}
-
-.field{
-  display:grid;
-  gap:7px;
-  margin:12px 0;
-}
-
-.field label{
-  font-size:13px;
-  color:var(--muted);
-}
-
-.field textarea{
-  min-height:110px;
-  resize:vertical;
-}
-
-/* =========================
-   AVISOS
-========================= */
-
-.notice{
-  padding:12px 14px;
-  border-radius:12px;
-  background:#202b3a;
-  border:1px solid var(--line);
-  color:var(--muted);
-}
-
-.notice.error{
-  border-color:rgba(184,26,43,.55);
-  color:#ffd7dc;
-}
-
-.notice.ok{
-  border-color:rgba(255,165,134,.4);
-  color:#ffe3d8;
-}
-
-.empty{
-  padding:35px;
-  text-align:center;
-  border:1px dashed var(--line);
-  border-radius:18px;
-  color:var(--muted);
-}
-
-/* =========================
-   AUTENTICAÇÃO
-========================= */
-
-.auth{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  background:
-    radial-gradient(
-      circle at 80% 10%,
-      rgba(184,26,43,.18),
-      transparent 32%
-    ),
-    var(--bg);
-}
-
-.authbox{
-  width:min(440px,100%);
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:28px;
-}
-
-.authlogo{
-  font-weight:950;
-  letter-spacing:.16em;
-  font-size:27px;
-  margin-bottom:22px;
-}
-
-.auth-tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  background:#1d2735;
-  border-radius:12px;
-  padding:4px;
-  margin-bottom:18px;
-}
-
-.auth-tabs button{
-  border:0;
-  background:none;
-  color:var(--muted);
-  padding:10px;
-  border-radius:9px;
-}
-
-.auth-tabs button.active{
-  background:var(--panel2);
-  color:var(--text);
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-.mobile{
-  display:none;
-}
-
-@media(max-width:900px){
-
-  .layout{
-    grid-template-columns:1fr;
-  }
-
-  .side{
-    display:none;
-  }
-
-  .mobile{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:64px;
-    background:rgba(24,32,47,.96);
-    border-top:1px solid var(--line);
-    display:grid;
-    grid-template-columns:
-      repeat(5,1fr);
-    z-index:30;
-  }
-
-  .mobile button{
-    text-align:center;
-    font-size:11px;
-    padding:8px;
-  }
-
-  .main{
-    padding:20px 16px 88px;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .grid2{
-    grid-template-columns:1fr;
-  }
-
-  .top{
-    padding:0 14px;
-  }
-
-  .search{
-    display:none;
-  }
-
-  h1{
-    font-size:29px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<!-- =========================
-     AUTENTICAÇÃO
-========================= -->
-
-<div id="auth" class="auth">
-
-  <div class="authbox">
-
-    <div class="authlogo">
-      NERVA
-    </div>
-
-    <div
-      class="sub"
-      style="margin-bottom:20px"
-    >
-      O lugar onde a cena acontece.
-    </div>
-
-    <div class="auth-tabs">
-
-      <button
-        id="tabLogin"
-        class="active"
-        onclick="setAuthMode('login')"
-      >
-        Entrar
-      </button>
-
-      <button
-        id="tabSignup"
-        onclick="setAuthMode('signup')"
-      >
-        Criar conta
-      </button>
-
-    </div>
-
-    <div id="authNotice"></div>
-
-    <div
-      id="nameField"
-      class="field hidden"
-    >
-      <label>Nome</label>
-
-      <input
-        id="name"
-        autocomplete="name"
-      >
-    </div>
-
-    <div class="field">
-
-      <label>E-mail</label>
-
-      <input
-        id="email"
-        type="email"
-        autocomplete="email"
-      >
-
-    </div>
-
-    <div class="field">
-
-      <label>Senha</label>
-
-      <input
-        id="password"
-        type="password"
-        minlength="6"
-        autocomplete="current-password"
-      >
-
-    </div>
-
-    <button
-      id="authButton"
-      class="btn primary"
-      style="width:100%;margin-top:5px"
-      onclick="submitAuth()"
-    >
-      Entrar
-    </button>
-
-  </div>
-
-</div>
-
-<!-- =========================
-     APLICAÇÃO
-========================= -->
-
-<div id="app" class="app hidden">
-
-<header class="top">
-
-  <div class="logo">
-    NERVA
-  </div>
-
-  <div class="search">
-
-    <input
-      id="searchInput"
-      placeholder="Buscar na NERVA..."
-      onkeydown="if(event.key==='Enter')doSearch()"
-    >
-
-  </div>
-
-  <button
-    class="btn ghost"
-    onclick="openProfileModal()"
-  >
-    Perfil
-  </button>
-
-  <button
-    class="btn ghost"
-    onclick="logout()"
-  >
-    Sair
-  </button>
-
-</header>
-
-<div class="layout">
-
-<aside class="side">
-
-  <div class="nav">
-
-    <button
-      data-view="home"
-      onclick="go('home')"
-    >
-      Início
-    </button>
-
-    <button
-      data-view="discover"
-      onclick="go('discover')"
-    >
-      Descobrir
-    </button>
-
-    <button
-      data-view="now"
-      onclick="go('now')"
-    >
-      Agora
-    </button>
-
-    <button
-      data-view="charts"
-      onclick="go('charts')"
-    >
-      Charts
-    </button>
-
-    <button
-      data-view="artists"
-      onclick="go('artists')"
-    >
-      Artistas
-    </button>
-
-    <button
-      data-view="albums"
-      onclick="go('albums')"
-    >
-      Álbuns
-    </button>
-
-    <button
-      data-view="eras"
-      onclick="go('eras')"
-    >
-      Eras
-    </button>
-
-    <button
-      data-view="labels"
-      onclick="go('labels')"
-    >
-      Gravadoras
-    </button>
-
-    <button
-      data-view="fandoms"
-      onclick="go('fandoms')"
-    >
-      Fandoms
-    </button>
-
-    <button
-      data-view="news"
-      onclick="go('news')"
-    >
-      Notícias
-    </button>
-
-    <button
-      data-view="support"
-      onclick="go('support')"
-    >
-      Suporte
-    </button>
-
-  </div>
-
-</aside>
-
-<main class="main">
-
-<section
-  id="home"
-  class="view"
-></section>
-
-<section
-  id="discover"
-  class="view"
-></section>
-
-<section
-  id="now"
-  class="view"
-></section>
-
-<section
-  id="charts"
-  class="view"
-></section>
-
-<section
-  id="artists"
-  class="view"
-></section>
-
-<section
-  id="albums"
-  class="view"
-></section>
-
-<section
-  id="eras"
-  class="view"
-></section>
-
-<section
-  id="labels"
-  class="view"
-></section>
-
-<section
-  id="fandoms"
-  class="view"
-></section>
-
-<section
-  id="news"
-  class="view"
-></section>
-
-<section
-  id="support"
-  class="view"
-></section>
-
-<section
-  id="results"
-  class="view"
-></section>
-
-</main>
-
-</div>
-
-<nav class="mobile">
-
-<button
-  data-view="home"
-  onclick="go('home')"
->
-  Início
-</button>
-
-<button
-  data-view="discover"
-  onclick="go('discover')"
->
-  Descobrir
-</button>
-
-<button
-  data-view="now"
-  onclick="go('now')"
->
-  Agora
-</button>
-
-<button
-  data-view="charts"
-  onclick="go('charts')"
->
-  Charts
-</button>
-
-<button
-  data-view="artists"
-  onclick="go('artists')"
->
-  Artistas
-</button>
-
-</nav>
-
-</div>
-
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-  id="modal"
-  class="modal hidden"
->
-
-<div class="modalbox">
-
-<div class="between">
-
-<h2 id="modalTitle">
-NERVA
-</h2>
-
-<button
-  class="btn"
-  onclick="closeModal()"
->
-Fechar
-</button>
-
-</div>
-
-<div id="modalBody"></div>
-
-</div>
-
-</div>
-
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+/* =====================================================
+   NERVA — AUTENTICAÇÃO REAL
+   ===================================================== */
+
 const SUPABASE_URL =
-  "https://vtjibeowavgzgjuzquif.supabase.co";
+"https://vtjibeowavgzgjuzquif.supabase.co";
 
 /*
-  COLE AQUI SOMENTE A SUA
-  CHAVE PUBLICÁVEL DO SUPABASE.
+   IMPORTANTE:
+   COLE AQUI A SUA CHAVE PUBLICÁVEL
+   DO SUPABASE.
 
-  NÃO COLOQUE A SECRET KEY.
+   Ela começa com:
+   sb_publishable_
+
+   NÃO coloque a secret key.
 */
+const SUPABASE_KEY =
+"sb_publishable_lnE4vgQjNHJob2E3Z6aA5Q_DaLEOT3p";
 
-const SUPABASE_PUBLISHABLE_KEY =
-  "COLE_AQUI_SUA_PUBLISHABLE_KEY";
+let supabaseClient;
+let currentSession = null;
+let currentUser = null;
 
-let sb = null;
-let session = null;
-let profile = null;
 
-let artists = [];
-let albums = [];
-let eras = [];
-let labels = [];
-let fandoms = [];
-let news = [];
+/* =====================================================
+   INICIALIZAÇÃO
+   ===================================================== */
 
-let currentView = "home";
-let authMode = "login";
+function iniciarSupabase(){
 
-const esc = s =>
-  String(s ?? "").replace(
-    /[&<>"']/g,
-    m => ({
-      "&":"&amp
+    if(
+        !SUPABASE_KEY ||
+        SUPABASE_KEY === "COLE_AQUI_SUA_CHAVE_PUBLICAVEL"
+    ){
+
+        mostrarErro(
+            "A conexão com o banco ainda não foi configurada."
+        );
+
+        return false;
+    }
+
+    if(
+        !window.supabase ||
+        !window.supabase.createClient
+    ){
+
+        mostrarErro(
+            "Não foi possível carregar o sistema de banco."
+        );
+
+        return false;
+    }
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY,
+            {
+                auth:{
+                    persistSession:true,
+                    autoRefreshToken:true,
+                    detectSessionInUrl:true
+                }
+            }
+        );
+
+    return true;
+}
+
+
+/* =====================================================
+   MENSAGENS
+   ===================================================== */
+
+function mostrarErro(mensagem){
+
+    const elemento =
+        document.getElementById("authNotice");
+
+    if(!elemento) return;
+
+    elemento.innerHTML = `
+        <div style="
+            padding:13px;
+            margin-bottom:15px;
+            border-radius:12px;
+            background:#401A25;
+            border:1px solid #B81A2B;
+            color:#fff;
+            line-height:1.45;
+        ">
+            ${escapar(mensagem)}
+        </div>
+    `;
+}
+
+
+function mostrarSucesso(mensagem){
+
+    const elemento =
+        document.getElementById("authNotice");
+
+    if(!elemento) return;
+
+    elemento.innerHTML = `
+        <div style="
+            padding:13px;
+            margin-bottom:15px;
+            border-radius:12px;
+            background:#242F39;
+            border:1px solid #FFA586;
+            color:#FFA586;
+            line-height:1.45;
+        ">
+            ${escapar(mensagem)}
+        </div>
+    `;
+}
+
+
+function escapar(texto){
+
+    return String(texto ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =====================================================
+   CADASTRO
+   ===================================================== */
+
+async function criarConta(){
+
+    const nome =
+        document
+        .getElementById("name")
+        ?.value
+        ?.trim();
+
+    const email =
+        document
+        .getElementById("email")
+        ?.value
+        ?.trim();
+
+    const senha =
+        document
+        .getElementById("password")
+        ?.value;
+
+    const botao =
+        document.getElementById("authButton");
+
+
+    if(!nome){
+
+        mostrarErro(
+            "Digite seu nome."
+        );
+
+        return;
+    }
+
+
+    if(!email){
+
+        mostrarErro(
+            "Digite seu e-mail."
+        );
+
+        return;
+    }
+
+
+    if(!email.includes("@")){
+
+        mostrarErro(
+            "Digite um e-mail válido."
+        );
+
+        return;
+    }
+
+
+    if(!senha || senha.length < 6){
+
+        mostrarErro(
+            "A senha precisa ter pelo menos 6 caracteres."
+        );
+
+        return;
+    }
+
+
+    if(!supabaseClient){
+
+        mostrarErro(
+            "O banco ainda não foi inicializado."
+        );
+
+        return;
+    }
+
+
+    if(botao){
+
+        botao.disabled = true;
+        botao.textContent = "Criando conta...";
+    }
+
+
+    try{
+
+        const resultado =
+            await supabaseClient.auth.signUp({
+
+                email:email,
+
+                password:senha,
+
+                options:{
+                    data:{
+                        display_name:nome
+                    }
+                }
+
+            });
+
+
+        if(resultado.error){
+
+            throw resultado.error;
+        }
+
+
+        /*
+           Se o Supabase estiver configurado
+           para exigir confirmação de e-mail,
+           a sessão poderá vir vazia.
+        */
+
+        if(!resultado.data.session){
+
+            mostrarSucesso(
+                "Conta criada! Confira seu e-mail para confirmar a conta e depois entre na NERVA."
+            );
+
+        }else{
+
+            currentSession =
+                resultado.data.session;
+
+            currentUser =
+                resultado.data.user;
+
+            await prepararPerfil();
+
+            entrarNoAplicativo();
+        }
+
+
+    }catch(erro){
+
+        console.error(
+            "Erro ao criar conta:",
+            erro
+        );
+
+
+        let mensagem =
+            erro?.message ||
+            "Não foi possível criar sua conta.";
+
+
+        if(
+            mensagem
+            .toLowerCase()
+            .includes("already registered")
+        ){
+
+            mensagem =
+                "Esse e-mail já possui uma conta. Entre na NERVA.";
+
+        }
+
+
+        mostrarErro(mensagem);
+
+
+    }finally{
+
+        if(botao){
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "Criar conta";
+
+        }
+
+    }
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+async function entrarConta(){
+
+    const email =
+        document
+        .getElementById("email")
+        ?.value
+        ?.trim();
+
+    const senha =
+        document
+        .getElementById("password")
+        ?.value;
+
+    const botao =
+        document.getElementById("authButton");
+
+
+    if(!email){
+
+        mostrarErro(
+            "Digite seu e-mail."
+        );
+
+        return;
+    }
+
+
+    if(!senha){
+
+        mostrarErro(
+            "Digite sua senha."
+        );
+
+        return;
+    }
+
+
+    if(!supabaseClient){
+
+        mostrarErro(
+            "O banco ainda não foi inicializado."
+        );
+
+        return;
+    }
+
+
+    if(botao){
+
+        botao.disabled = true;
+        botao.textContent = "Entrando...";
+    }
+
+
+    try{
+
+        const resultado =
+            await supabaseClient.auth
+            .signInWithPassword({
+
+                email:email,
+
+                password:senha
+
+            });
+
+
+        if(resultado.error){
+
+            throw resultado.error;
+        }
+
+
+        currentSession =
+            resultado.data.session;
+
+        currentUser =
+            resultado.data.user;
+
+
+        await prepararPerfil();
+
+        entrarNoAplicativo();
+
+
+    }catch(erro){
+
+        console.error(
+            "Erro no login:",
+            erro
+        );
+
+
+        let mensagem =
+            erro?.message ||
+            "Não foi possível entrar.";
+
+
+        if(
+            mensagem
+            .toLowerCase()
+            .includes("invalid login credentials")
+        ){
+
+            mensagem =
+                "E-mail ou senha incorretos.";
+
+        }
+
+
+        mostrarErro(mensagem);
+
+
+    }finally{
+
+        if(botao){
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "Entrar";
+
+        }
+
+    }
+}
+
+
+/* =====================================================
+   BOTÃO PRINCIPAL
+   ===================================================== */
+
+async function enviarAutenticacao(){
+
+    const modo =
+        window.authMode || "login";
+
+
+    if(modo === "signup"){
+
+        await criarConta();
+
+    }else{
+
+        await entrarConta();
+
+    }
+}
+
+
+/* =====================================================
+   MODO ENTRAR / CRIAR CONTA
+   ===================================================== */
+
+function mudarModoAuth(modo){
+
+    window.authMode = modo;
+
+
+    const login =
+        document.getElementById("tabLogin");
+
+    const cadastro =
+        document.getElementById("tabSignup");
+
+    const nome =
+        document.getElementById("nameField");
+
+    const botao =
+        document.getElementById("authButton");
+
+
+    if(modo === "signup"){
+
+        login?.classList.remove("active");
+        cadastro?.classList.add("active");
+
+        nome?.classList.remove("hidden");
+
+        if(botao){
+
+            botao.textContent =
+                "Criar conta";
+
+        }
+
+    }else{
+
+        login?.classList.add("active");
+        cadastro?.classList.remove("active");
+
+        nome?.classList.add("hidden");
+
+        if(botao){
+
+            botao.textContent =
+                "Entrar";
+
+        }
+
+    }
+
+
+    const aviso =
+        document.getElementById("authNotice");
+
+    if(aviso){
+
+        aviso.innerHTML = "";
+
+    }
+}
+
+
+/* Compatibilidade com os botões
+   do código anterior */
+
+function setAuthMode(modo){
+
+    mudarModoAuth(modo);
+
+}
+
+
+/* =====================================================
+   PERFIL NO BANCO
+   ===================================================== */
+
+async function prepararPerfil(){
+
+    if(!currentUser) return;
+
+
+    try{
+
+        const existente =
+            await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id",currentUser.id)
+            .maybeSingle();
+
+
+        if(existente.error){
+
+            console.error(
+                "Erro buscando perfil:",
+                existente.error
+            );
+
+            return;
+        }
+
+
+        if(!existente.data){
+
+            const nome =
+                currentUser
+                .user_metadata
+                ?.display_name
+                ||
+                currentUser.email
+                ?.split("@")[0]
+                ||
+                "Usuário NERVA";
+
+
+            const username =
+                gerarUsername(nome);
+
+
+            const novoPerfil =
+                await supabaseClient
+                .from("profiles")
+                .insert({
+
+                    id:currentUser.id,
+
+                    username:username,
+
+                    display_name:nome,
+
+                    bio:"",
+
+                    is_artist:false,
+
+                    is_verified:false
+
+                });
+
+
+            if(novoPerfil.error){
+
+                console.error(
+                    "Erro criando perfil:",
+                    novoPerfil.error
+                );
+
+            }
+
+        }
+
+    }catch(erro){
+
+        console.error(
+            "Erro preparando perfil:",
+            erro
+        );
+
+    }
+}
+
+
+/* =====================================================
+   USERNAME
+   ===================================================== */
+
+function gerarUsername(nome){
+
+    let resultado =
+        String(nome)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .replace(
+            /[^a-z0-9]/g,
+            ""
+        )
+        .slice(0,20);
+
+
+    if(!resultado){
+
+        resultado = "nervauser";
+
+    }
+
+
+    return resultado;
+}
+
+
+/* =====================================================
+   ENTRAR NO APLICATIVO
+   ===================================================== */
+
+function entrarNoAplicativo(){
+
+    const auth =
+        document.getElementById("auth");
+
+    const app =
+        document.getElementById("app");
+
+
+    auth?.classList.add("hidden");
+
+    app?.classList.remove("hidden");
+
+
+    /*
+       Se o seu código já possuir
+       a função go(), usamos ela.
+    */
+
+    if(typeof go === "function"){
+
+        go("home");
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+async function sairDaConta(){
+
+    if(!supabaseClient) return;
+
+    await supabaseClient.auth.signOut();
+
+    currentSession = null;
+    currentUser = null;
+
+    document
+        .getElementById("app")
+        ?.classList
+        .add("hidden");
+
+    document
+        .getElementById("auth")
+        ?.classList
+        .remove("hidden");
+}
+
+
+/* Compatibilidade */
+
+async function logout(){
+
+    await sairDaConta();
+
+}
+
+
+/* =====================================================
+   RECUPERAR SESSÃO
+   ===================================================== */
+
+async function verificarSessao(){
+
+    if(!supabaseClient) return;
+
+
+    try{
+
+        const resultado =
+            await supabaseClient.auth
+            .getSession();
+
+
+        if(resultado.error){
+
+            console.error(
+                resultado.error
+            );
+
+            return;
+        }
+
+
+        currentSession =
+            resultado.data.session;
+
+
+        if(currentSession){
+
+            currentUser =
+                currentSession.user;
+
+            await prepararPerfil();
+
+            entrarNoAplicativo();
+
+        }
+
+    }catch(erro){
+
+        console.error(
+            "Erro verificando sessão:",
+            erro
+        );
+
+    }
+
+
+    supabaseClient.auth
+    .onAuthStateChange(
+        async(event,sessao)=>{
+
+            currentSession =
+                sessao;
+
+            currentUser =
+                sessao?.user || null;
+
+        }
+    );
+}
+
+
+/* =====================================================
+   INICIAR
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async()=>{
+
+        const conectado =
+            iniciarSupabase();
+
+        if(!conectado) return;
+
+        /*
+           O botão antigo do HTML agora
+           chama nossa função correta.
+        */
+
+        const botao =
+            document.getElementById(
+                "authButton"
+            );
+
+        if(botao){
+
+            botao.onclick =
+                enviarAutenticacao;
+
+        }
+
+
+        await verificarSessao();
+
+    }
+);
+          </script>
